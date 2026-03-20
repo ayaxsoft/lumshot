@@ -15,10 +15,10 @@ export default defineConfig({
         vite: {
           build: {
             rollupOptions: {
-              external: ['sharp'] // To avoid bundling sharp with the main process
-            }
-          }
-        }
+              external: ['sharp'], // To avoid bundling sharp with the main process
+            },
+          },
+        },
       },
       preload: {
         // Shortcut of `build.rollupOptions.input`.
@@ -28,10 +28,11 @@ export default defineConfig({
       // Ployfill the Electron and Node.js API for Renderer process.
       // If you want use Node.js in Renderer process, the `nodeIntegration` needs to be enabled in the Main process.
       // See 👉 https://github.com/electron-vite/vite-plugin-electron-renderer
-      renderer: process.env.NODE_ENV === 'test'
-        // https://github.com/electron-vite/vite-plugin-electron-renderer/issues/78#issuecomment-2053600808
-        ? undefined
-        : {},
+      renderer:
+        process.env.NODE_ENV === 'test'
+          ? // https://github.com/electron-vite/vite-plugin-electron-renderer/issues/78#issuecomment-2053600808
+            undefined
+          : {},
     }),
   ],
 })
