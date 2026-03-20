@@ -38,6 +38,11 @@ const createWindow = () => {
     // win.loadFile('dist/index.html')
     win.loadFile(path.join(RENDERER_DIST, 'index.html'))
   }
+
+  // Open DevTools
+  if (process.env.NODE_ENV === 'development') {
+    win.webContents.openDevTools()
+  }
 }
 
 // IPC Handlers
