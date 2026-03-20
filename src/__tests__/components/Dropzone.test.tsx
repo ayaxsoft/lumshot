@@ -30,7 +30,8 @@ function stubFileReader(result: string) {
   const Original = globalThis.FileReader
   globalThis.FileReader = class MockFileReader {
     onload: ((ev: ProgressEvent<FileReader>) => void) | null = null
-    readAsDataURL(_file: Blob) {
+    readAsDataURL(file: Blob) {
+      void file
       queueMicrotask(() => {
         this.onload?.({ target: { result } } as ProgressEvent<FileReader>)
       })
