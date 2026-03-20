@@ -1,5 +1,7 @@
 import { create } from 'zustand'
+import { devtools } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
+
 import {
   AspectRatio,
   BackgroundConfig,
@@ -67,50 +69,53 @@ const initialState: EditorState = {
 }
 
 export const useEditorStore = create<EditorState & EditorActions>()(
-  immer((set) => ({
-    ...initialState,
+  devtools(
+    immer((set) => ({
+      ...initialState,
 
-    setImage: (image) =>
-      set((state) => {
-        state.image = image
-      }),
-    setBackground: (bg) =>
-      set((state) => {
-        Object.assign(state.background, bg)
-      }),
-    setPadding: (v) =>
-      set((state) => {
-        state.padding = v
-      }),
-    setBorderRadius: (v) =>
-      set((state) => {
-        state.borderRadius = v
-      }),
-    setScale: (v) =>
-      set((state) => {
-        state.scale = v
-      }),
-    setOffset: (x, y) =>
-      set((state) => {
-        state.offsetX = x
-        state.offsetY = y
-      }),
-    setShadow: (shadow) =>
-      set((state) => {
-        Object.assign(state.shadow, shadow)
-      }),
-    setAspectRatio: (v) =>
-      set((state) => {
-        state.aspectRatio = v
-      }),
-    setExportFormat: (v) =>
-      set((state) => {
-        state.exportFormat = v
-      }),
-    setExportResolution: (v) =>
-      set((state) => {
-        state.exportResolution = v
-      }),
-    reset: () => set(() => ({ ...initialState })),
-  }))
+      setImage: (image) =>
+        set((state) => {
+          state.image = image
+        }),
+      setBackground: (bg) =>
+        set((state) => {
+          Object.assign(state.background, bg)
+        }),
+      setPadding: (v) =>
+        set((state) => {
+          state.padding = v
+        }),
+      setBorderRadius: (v) =>
+        set((state) => {
+          state.borderRadius = v
+        }),
+      setScale: (v) =>
+        set((state) => {
+          state.scale = v
+        }),
+      setOffset: (x, y) =>
+        set((state) => {
+          state.offsetX = x
+          state.offsetY = y
+        }),
+      setShadow: (shadow) =>
+        set((state) => {
+          Object.assign(state.shadow, shadow)
+        }),
+      setAspectRatio: (v) =>
+        set((state) => {
+          state.aspectRatio = v
+        }),
+      setExportFormat: (v) =>
+        set((state) => {
+          state.exportFormat = v
+        }),
+      setExportResolution: (v) =>
+        set((state) => {
+          state.exportResolution = v
+        }),
+      reset: () => set(() => ({ ...initialState })),
+    })),
+    { store: 'editor-store' }
+  )
 )
