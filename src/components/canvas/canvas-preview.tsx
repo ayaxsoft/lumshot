@@ -1,4 +1,5 @@
 import { useEditorStore } from '../../store/useEditorStore'
+import { buildImageFrameStyle } from '../../utils/build-image-frame-style'
 import { DropZone } from '../dropzone/dropzone'
 import { BackgroundLayer } from './background-layer'
 import { ImageLayer } from './image-layer'
@@ -15,6 +16,8 @@ const CanvasPreview = () => {
 
   const imageConfig = { padding, borderRadius, scale, offsetX, offsetY, shadow }
 
+  const emptyFrameStyle = buildImageFrameStyle(borderRadius, offsetX, offsetY, shadow)
+
   return (
     <div
       data-testid="canvas-preview"
@@ -27,10 +30,17 @@ const CanvasPreview = () => {
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">
             <div
-              style={{ width: `${(1 - padding / 100) * scale * 100}%` }}
-              className="aspect-video w-[80%] overflow-hidden rounded-2xl bg-neutral-900"
+              style={{
+                width: `${(1 - padding / 100) * scale * 100}%`,
+              }}
             >
-              <DropZone />
+              <div
+                data-testid="dropzone-frame"
+                className="aspect-video w-full overflow-hidden bg-neutral-900"
+                style={emptyFrameStyle}
+              >
+                <DropZone />
+              </div>
             </div>
           </div>
         )}
