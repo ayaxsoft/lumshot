@@ -1,7 +1,7 @@
-import CanvasPreview from './components/canvas/CanvasPreview'
-import { Sidebar } from './components/panels/Sidebar'
+import CanvasPreview from '@/components/canvas/canvas-preview'
+import { Sidebar } from '@/components/panels/sidebar'
 
-function App() {
+export default function App() {
   return (
     <div className="flex w-screen h-screen bg-neutral-900">
       <Sidebar />
@@ -11,5 +11,3 @@ function App() {
     </div>
   )
 }
-
-export default App

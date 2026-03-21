@@ -1,13 +1,12 @@
 import { useEditorStore } from '../../store/useEditorStore'
 import { useCallback } from 'react'
 
-const DropZone = () => {
+export const DropZone = () => {
   const setImage = useEditorStore((state) => state.setImage)
 
   const handleOpen = async () => {
     const image = await window.lumshotAPI.openFile()
     if (image) {
-      console.log('image opened', image.naturalWidth, image.naturalHeight)
       setImage(image)
     }
   }
@@ -24,7 +23,6 @@ const DropZone = () => {
       reader.onload = (ev) => {
         const image = new Image()
         image.onload = () => {
-          console.log('image loaded', image.width, image.height)
           setImage({
             path: file.name,
             dataUrl: ev.target?.result as string,
@@ -67,5 +65,3 @@ const DropZone = () => {
     </div>
   )
 }
-
-export default DropZone

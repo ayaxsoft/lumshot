@@ -1,6 +1,13 @@
 export type BackgroundType = 'gradient' | 'solid' | 'radial' | 'mesh' | 'pattern' | 'image'
 
-export type PatternType = 'dots' | 'lines' | 'grid'
+export type PatternType =
+  | 'dots'
+  | 'lines'
+  | 'grid'
+  | 'squares'
+  | 'hexagons'
+  | 'triangles'
+  | 'circles'
 
 export type AspectRatio = '1:1' | '4:3' | '16:9' | '9:16' | 'auto'
 
@@ -34,11 +41,24 @@ export interface GradientConfig {
   angle?: number // 0-360 only for linear
 }
 
+export interface MeshRadialLayerSpec {
+  ellipseWidthPercent: number
+  ellipseHeightPercent: number
+  atXPercent: number
+  atYPercent: number
+  transparentAtPercent: number
+  colorStopIndex: 0 | 1 | 2
+}
+
 export interface PatternConfig {
   type: PatternType
   foreground: string
   background: string
   size: number // tile size in pixels (default 16)
+}
+
+export interface PatternPreset extends PatternConfig {
+  label: string
 }
 
 export interface BackgroundConfig {

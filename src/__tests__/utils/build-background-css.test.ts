@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { buildBackgroundCSS } from '../../utils/build-background-css'
+import { buildGradientCSS } from '../../utils/build-gradient-css'
 import { BackgroundConfig } from '../../store/types'
 
 describe('buildBackgroundCSS', () => {
@@ -93,7 +94,7 @@ describe('buildBackgroundCSS', () => {
       imageDataUrl: null,
     }
     const css = buildBackgroundCSS(background)
-    expect(css).toBe('radial-gradient(circle, #000000 0%, #ffffff 100%)')
+    expect(css).toBe(buildGradientCSS(background.gradient))
   })
 
   it('should return image URL for `background-image`', () => {
@@ -212,7 +213,7 @@ describe('buildBackgroundCSS', () => {
     }
     const css = buildBackgroundCSS(background)
     expect(css).toBe(
-      '#000000 linear-gradient(#ffffff 1px, transparent 1px) 0 0 / 16px 16px, linear-gradient(90deg, #ffffff 1px, transparent 1px) 0 0 / 16px 16px'
+      '#000000 linear-gradient(to bottom, #ffffff 0, #ffffff 1px, #000000 1px) 0 0 / 16px 16px, linear-gradient(to right, #ffffff 0, #ffffff 1px, #000000 1px) 0 0 / 16px 16px'
     )
   })
 })

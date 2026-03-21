@@ -1,1 +1,22 @@
 @import 'tailwindcss';
+
+.react-colorful {
+  width: 100% !important;
+}
+
+@theme {
+  --animate-gradient-preset-select: gradient-preset-select 320ms cubic-bezier(0.34, 1.45, 0.64, 1)
+    both;
+
+  @keyframes gradient-preset-select {
+    0% {
+      transform: scale(1);
+    }
+    55% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1.02);
+    }
+  }
+}
