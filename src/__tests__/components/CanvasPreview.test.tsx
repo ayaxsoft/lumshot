@@ -65,7 +65,7 @@ describe('CanvasPreview', () => {
 
   it('should render DropZone when there is no image', () => {
     render(<CanvasPreview />)
-    expect(screen.queryByTestId('canvas-preview')).not.toBeInTheDocument()
+    expect(screen.getByTestId('canvas-preview')).toBeInTheDocument()
     expect(screen.getByTestId('dropzone')).toBeInTheDocument()
   })
 
