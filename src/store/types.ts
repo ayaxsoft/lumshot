@@ -14,6 +14,15 @@ export interface ImageMeta {
   naturalHeight: number
 }
 
+export interface ImageConfig {
+  padding: number
+  borderRadius: number
+  scale: number
+  offsetX: number
+  offsetY: number
+  shadow: ShadowConfig
+}
+
 export interface GradientStop {
   color: string
   position: number // 0-100
