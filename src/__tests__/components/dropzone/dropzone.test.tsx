@@ -1,12 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, waitFor, fireEvent, createEvent } from '@testing-library/react'
-import DropZone from '../../components/dropzone/DropZone'
+import { DropZone } from '@/components/dropzone/dropzone'
 
 const { setImage } = vi.hoisted(() => ({
   setImage: vi.fn(),
 }))
 
-vi.mock('../../store/useEditorStore', () => ({
+vi.mock('@/store/useEditorStore', () => ({
   useEditorStore: (selector: (s: { setImage: typeof setImage }) => unknown) =>
     selector({ setImage }),
 }))

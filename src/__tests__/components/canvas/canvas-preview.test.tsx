@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import CanvasPreview from '../../components/canvas/CanvasPreview'
-import type { BackgroundConfig, ImageMeta, ShadowConfig } from '../../store/types'
+import CanvasPreview from '@/components/canvas/canvas-preview'
+import type { BackgroundConfig, ImageMeta, ShadowConfig } from '@/store/types'
 
 const { editorSlice } = vi.hoisted(() => {
   const background: BackgroundConfig = {
@@ -47,7 +47,7 @@ const { editorSlice } = vi.hoisted(() => {
   return { editorSlice }
 })
 
-vi.mock('../../store/useEditorStore', () => ({
+vi.mock('@/store/useEditorStore', () => ({
   useEditorStore: (selector: (s: typeof editorSlice) => unknown) => selector(editorSlice),
 }))
 

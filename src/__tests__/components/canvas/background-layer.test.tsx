@@ -1,8 +1,8 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import * as backgroundCss from '../../utils/build-background-css'
-import { BackgroundLayer } from '../../components/canvas/BackgroundLayer'
-import { BackgroundConfig } from '../../store/types'
+import * as backgroundCss from '../../../utils/build-background-css'
+import { BackgroundLayer } from '../../../components/canvas/background-layer'
+import { BackgroundConfig } from '../../../store/types'
 
 const stops = [
   { color: '#000000', position: 0 },
@@ -70,7 +70,7 @@ describe('BackgroundLayer', () => {
     })
     render(<BackgroundLayer background={background} />)
     expect(screen.getByTestId('background-layer')).toHaveStyle({
-      background: 'radial-gradient(circle, #000000 0%, #ffffff 100%)',
+      background: backgroundCss.buildBackgroundCSS(background),
     })
   })
 

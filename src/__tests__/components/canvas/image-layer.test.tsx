@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import { ImageLayer } from '../../components/canvas/ImageLayer'
-import { ImageConfig, ImageMeta } from '../../store/types'
+import { ImageLayer } from '../../../components/canvas/image-layer'
+import { ImageConfig, ImageMeta } from '../../../store/types'
 
 const testImage = (): ImageMeta => ({
   path: 'test.png',

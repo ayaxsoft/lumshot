@@ -1,7 +1,7 @@
 import { useEditorStore } from '../../store/useEditorStore'
-import DropZone from '../dropzone/DropZone'
-import { BackgroundLayer } from './BackgroundLayer'
-import { ImageLayer } from './ImageLayer'
+import { DropZone } from '../dropzone/dropzone'
+import { BackgroundLayer } from './background-layer'
+import { ImageLayer } from './image-layer'
 
 const CanvasPreview = () => {
   const image = useEditorStore((state) => state.image)
