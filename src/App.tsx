@@ -1,9 +1,9 @@
-import DropZone from './components/dropzone/DropZone'
+import CanvasPreview from './components/canvas/CanvasPreview'
 
 function App() {
   return (
-    <div className="w-screen h-screen bg-neutral-900">
-      <DropZone />
+    <div className="relative w-screen h-screen bg-neutral-900">
+      <CanvasPreview />
     </div>
   )
 }
