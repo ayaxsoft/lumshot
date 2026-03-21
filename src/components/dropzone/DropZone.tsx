@@ -45,6 +45,7 @@ const DropZone = () => {
 
   return (
     <div
+      data-testid="dropzone"
       onClick={handleOpen}
       onDrop={handleDrop}
       onDragOver={handleDragOver}
