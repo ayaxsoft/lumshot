@@ -69,6 +69,22 @@ describe('CanvasPreview', () => {
     expect(screen.getByTestId('dropzone')).toBeInTheDocument()
   })
 
+  it('should apply image layout controls to the dropzone frame when there is no image', () => {
+    editorSlice.padding = 20
+    editorSlice.scale = 1
+    editorSlice.borderRadius = 18
+    editorSlice.offsetX = 6
+    editorSlice.offsetY = -2
+    render(<CanvasPreview />)
+    const frame = screen.getByTestId('dropzone-frame')
+    expect(frame).toHaveStyle({
+      borderRadius: '18px',
+      transform: 'translate(6px, -2px)',
+    })
+    const widthWrapper = frame.parentElement
+    expect(widthWrapper).toHaveStyle({ width: '80%' })
+  })
+
   it('should render canvas, background and image layers when image is set', () => {
     editorSlice.image = sampleImage
     render(<CanvasPreview />)

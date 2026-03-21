@@ -1,14 +1,36 @@
 import type { ReactNode } from 'react'
 
+import {
+  BackgroundTypeLinearGlyph,
+  BackgroundTypeMeshGlyph,
+  BackgroundTypeRadialGlyph,
+  BackgroundTypeSolidGlyph,
+} from '@/components/ui/background-type-glyphs'
 import { TypeSelector } from '@/components/ui/type-selector'
 import { useEditorStore } from '@/store/useEditorStore'
 import type { BackgroundType, GradientConfig } from '@/store/types'
 import { GradientPresets } from '../ui/gradient-presets'
 import { ColorPicker } from '../ui/color-picker'
+
 interface BackgroundPanelOption {
   value: BackgroundType
   label: string
   icon: ReactNode
+}
+
+interface BackgroundTypeIconTileProps {
+  children: ReactNode
+}
+
+const BackgroundTypeIconTile = ({ children }: BackgroundTypeIconTileProps) => {
+  return (
+    <div
+      className="flex size-full min-h-0 min-w-0 items-center justify-center rounded-md bg-white/5 text-white/65 [&_svg]:size-7 [&_svg]:shrink-0"
+      aria-hidden
+    >
+      {children}
+    </div>
+  )
 }
 
 const BACKGROUND_OPTIONS: BackgroundPanelOption[] = [
@@ -16,38 +38,36 @@ const BACKGROUND_OPTIONS: BackgroundPanelOption[] = [
     value: 'gradient',
     label: 'Gradient',
     icon: (
-      <div
-        className="size-full rounded-md"
-        style={{ background: 'linear-gradient(135deg, #8B5CF6, #EC4899)' }}
-      />
+      <BackgroundTypeIconTile>
+        <BackgroundTypeLinearGlyph />
+      </BackgroundTypeIconTile>
     ),
   },
   {
     value: 'solid',
     label: 'Solid',
-    icon: <div className="size-full rounded-md bg-blue-500" />,
+    icon: (
+      <BackgroundTypeIconTile>
+        <BackgroundTypeSolidGlyph />
+      </BackgroundTypeIconTile>
+    ),
   },
   {
     value: 'radial',
     label: 'Radial',
     icon: (
-      <div
-        className="size-full rounded-md"
-        style={{ background: 'radial-gradient(circle, #8B5CF6, #1a1a2e)' }}
-      />
+      <BackgroundTypeIconTile>
+        <BackgroundTypeRadialGlyph />
+      </BackgroundTypeIconTile>
     ),
   },
   {
     value: 'mesh',
     label: 'Mesh',
     icon: (
-      <div
-        className="size-full rounded-md"
-        style={{
-          background:
-            'radial-gradient(ellipse 95% 80% at 8% 12%, #EC4899 0%, transparent 58%), radial-gradient(ellipse 85% 95% at 95% 8%, #8B5CF6 0%, transparent 52%), linear-gradient(160deg, #EC4899 0%, #8B5CF6 52%, #EC4899 100%)',
-        }}
-      />
+      <BackgroundTypeIconTile>
+        <BackgroundTypeMeshGlyph />
+      </BackgroundTypeIconTile>
     ),
   },
 ]

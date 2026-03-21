@@ -1,5 +1,5 @@
 import { ImageConfig, ImageMeta } from '../../store/types'
-import { buildShadowCSS } from '../../utils/build-shadow-css'
+import { buildImageFrameStyle } from '../../utils/build-image-frame-style'
 
 interface ImageLayerProps {
   image: ImageMeta
@@ -17,12 +17,13 @@ export const ImageLayer = ({ image, config }: ImageLayerProps) => {
         <img
           src={image.dataUrl}
           alt={image.path}
-          className="w-full block"
-          style={{
-            borderRadius: `${config.borderRadius}px`,
-            boxShadow: buildShadowCSS(config.shadow),
-            transform: `translate(${config.offsetX}px, ${config.offsetY}px)`,
-          }}
+          className="block w-full"
+          style={buildImageFrameStyle(
+            config.borderRadius,
+            config.offsetX,
+            config.offsetY,
+            config.shadow
+          )}
         />
       </div>
     </div>
