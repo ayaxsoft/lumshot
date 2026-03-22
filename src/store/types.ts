@@ -112,6 +112,7 @@ export interface TextConfig {
 
 export interface EditorState {
   image: ImageMeta | null
+  pendingImage: ImageMeta | null // image that is being pasted
   background: BackgroundConfig
   padding: number // 0-50 (%)
   borderRadius: number // 0-40 (%)

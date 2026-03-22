@@ -2,13 +2,13 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, waitFor, fireEvent, createEvent } from '@testing-library/react'
 import { DropZone } from '@/components/dropzone/dropzone'
 
-const { setImage } = vi.hoisted(() => ({
-  setImage: vi.fn(),
+const { setPendingImage } = vi.hoisted(() => ({
+  setPendingImage: vi.fn(),
 }))
 
 vi.mock('@/store/useEditorStore', () => ({
-  useEditorStore: (selector: (s: { setImage: typeof setImage }) => unknown) =>
-    selector({ setImage }),
+  useEditorStore: (selector: (s: { setPendingImage: typeof setPendingImage }) => unknown) =>
+    selector({ setPendingImage }),
 }))
 
 const stubImageConstructor = () => {
@@ -53,10 +53,13 @@ describe('DropZone', () => {
 
   it('should render the drop zone', () => {
     render(<DropZone />)
-    expect(screen.getByText('Drop an image or click to open')).toBeInTheDocument()
+    expect(screen.getByText('Add an image')).toBeInTheDocument()
+    expect(
+      screen.getByText('Drop a file here, click to browse, or paste from the clipboard')
+    ).toBeInTheDocument()
   })
 
-  it('should call openFile and setImage when clicking on the drop zone', async () => {
+  it('should call openFile and setPendingImage when clicking on the drop zone', async () => {
     const meta = {
       path: '/tmp/x.png',
       dataUrl: 'data:image/png;base64,AA',
@@ -66,23 +69,23 @@ describe('DropZone', () => {
     vi.mocked(window.lumshotAPI.openFile).mockResolvedValue(meta)
 
     render(<DropZone />)
-    fireEvent.click(screen.getByText('Drop an image or click to open'))
+    fireEvent.click(screen.getByTestId('dropzone'))
 
     await waitFor(() => {
-      expect(setImage).toHaveBeenCalledWith(meta)
+      expect(setPendingImage).toHaveBeenCalledWith(meta)
     })
   })
 
-  it('should not call setImage if openFile returns null', async () => {
+  it('should not call setPendingImage if openFile returns null', async () => {
     vi.mocked(window.lumshotAPI.openFile).mockResolvedValue(null)
 
     render(<DropZone />)
-    fireEvent.click(screen.getByText('Drop an image or click to open'))
+    fireEvent.click(screen.getByTestId('dropzone'))
 
     await waitFor(() => {
       expect(window.lumshotAPI.openFile).toHaveBeenCalled()
     })
-    expect(setImage).not.toHaveBeenCalled()
+    expect(setPendingImage).not.toHaveBeenCalled()
   })
 
   it('should update the image with the dimensions read when dropping a file', async () => {
@@ -90,17 +93,16 @@ describe('DropZone', () => {
     const restoreImage = stubImageConstructor()
 
     render(<DropZone />)
-    const zone = screen.getByText('Drop an image or click to open').closest('div')
-    expect(zone).toBeTruthy()
+    const zone = screen.getByTestId('dropzone')
 
     const file = new File(['x'], 'foto.png', { type: 'image/png' })
     const dataTransfer = new DataTransfer()
     dataTransfer.items.add(file)
 
-    fireEvent.drop(zone!, { dataTransfer })
+    fireEvent.drop(zone, { dataTransfer })
 
     await waitFor(() => {
-      expect(setImage).toHaveBeenCalledWith({
+      expect(setPendingImage).toHaveBeenCalledWith({
         path: 'foto.png',
         dataUrl: 'data:image/png;base64,AAA',
         naturalWidth: 200,
@@ -114,7 +116,7 @@ describe('DropZone', () => {
 
   it('should prevent the default behavior when dragging over the drop zone', () => {
     render(<DropZone />)
-    const zone = screen.getByText('Drop an image or click to open').closest('div')!
+    const zone = screen.getByTestId('dropzone')
     const ev = createEvent.dragOver(zone)
     fireEvent(zone, ev)
     expect(ev.defaultPrevented).toBe(true)
