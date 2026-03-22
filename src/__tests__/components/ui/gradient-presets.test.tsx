@@ -18,6 +18,6 @@ describe('GradientPresets', () => {
       />
     )
     expect(screen.getByTestId('gradient-presets')).toBeInTheDocument()
-    expect(screen.getByText('Sunset')).toBeInTheDocument()
+    expect(screen.getByText('Scarlet')).toBeInTheDocument()
   })
 })

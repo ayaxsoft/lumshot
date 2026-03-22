@@ -11,7 +11,7 @@ vi.mock('@/store/useEditorStore', () => ({
     selector({ setImage }),
 }))
 
-function stubImageConstructor() {
+const stubImageConstructor = () => {
   const Original = globalThis.Image
   globalThis.Image = class MockImage {
     width = 200
@@ -26,7 +26,7 @@ function stubImageConstructor() {
   }
 }
 
-function stubFileReader(result: string) {
+const stubFileReader = (result: string) => {
   const Original = globalThis.FileReader
   globalThis.FileReader = class MockFileReader {
     onload: ((ev: ProgressEvent<FileReader>) => void) | null = null

@@ -9,9 +9,9 @@ const stops = [
   { color: '#ffffff', position: 100 },
 ]
 
-function cfg(
+const cfg = (
   partial: Partial<BackgroundConfig> & Pick<BackgroundConfig, 'type'>
-): BackgroundConfig {
+): BackgroundConfig => {
   const defaults: BackgroundConfig = {
     type: 'solid',
     solid: '#000000',
@@ -35,10 +35,10 @@ describe('BackgroundLayer', () => {
   it('should render with solid color', () => {
     const background = cfg({ type: 'solid' })
     render(<BackgroundLayer background={background} />)
-    const el = screen.getByTestId('background-layer')
-    expect(el).toBeInTheDocument()
-    expect(el).toHaveClass('absolute', 'inset-0')
-    expect(el).toHaveStyle({ background: '#000000' })
+    const element = screen.getByTestId('background-layer')
+    expect(element).toBeInTheDocument()
+    expect(element).toHaveClass('absolute', 'inset-0')
+    expect(element).toHaveStyle({ background: '#000000' })
   })
 
   it('should render with linear gradient', () => {
@@ -102,11 +102,11 @@ describe('BackgroundLayer', () => {
       },
     })
     render(<BackgroundLayer background={background} />)
-    const el = screen.getByTestId('background-layer')
-    const bg = el.style.background
-    expect(bg).toContain('radial-gradient(circle, #000000 1px, transparent 1px)')
-    expect(bg).toContain('#ffffff')
-    expect(bg).toMatch(/16px/)
+    const element = screen.getByTestId('background-layer')
+    const backgroundStyle = element.style.background
+    expect(backgroundStyle).toContain('radial-gradient(circle, #000000 1px, transparent 1px)')
+    expect(backgroundStyle).toContain('#ffffff')
+    expect(backgroundStyle).toMatch(/16px/)
   })
 
   it('should render lines pattern', () => {

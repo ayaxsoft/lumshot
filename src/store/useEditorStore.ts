@@ -44,15 +44,15 @@ const defaultShadow: ShadowConfig = {
 
 interface EditorActions {
   setImage: (image: ImageMeta) => void
-  setBackground: (bg: Partial<BackgroundConfig>) => void
-  setPadding: (v: number) => void
-  setBorderRadius: (v: number) => void
-  setScale: (v: number) => void
-  setOffset: (x: number, y: number) => void
+  setBackground: (background: Partial<BackgroundConfig>) => void
+  setPadding: (value: number) => void
+  setBorderRadius: (value: number) => void
+  setScale: (value: number) => void
+  setOffset: (offsetX: number, offsetY: number) => void
   setShadow: (shadow: Partial<ShadowConfig>) => void
-  setAspectRatio: (v: AspectRatio) => void
-  setExportFormat: (v: ExportFormat) => void
-  setExportResolution: (v: number) => void
+  setAspectRatio: (value: AspectRatio) => void
+  setExportFormat: (value: ExportFormat) => void
+  setExportResolution: (value: number) => void
   reset: () => void
 }
 
@@ -79,44 +79,44 @@ export const useEditorStore = create<EditorState & EditorActions>()(
         set((state) => {
           state.image = image
         }),
-      setBackground: (bg) =>
+      setBackground: (background) =>
         set((state) => {
-          Object.assign(state.background, bg)
+          Object.assign(state.background, background)
         }),
-      setPadding: (v) =>
+      setPadding: (value) =>
         set((state) => {
-          state.padding = v
+          state.padding = value
         }),
-      setBorderRadius: (v) =>
+      setBorderRadius: (value) =>
         set((state) => {
-          state.borderRadius = v
+          state.borderRadius = value
         }),
-      setScale: (v) =>
+      setScale: (value) =>
         set((state) => {
-          state.scale = v
+          state.scale = value
         }),
-      setOffset: (x, y) =>
+      setOffset: (offsetX, offsetY) =>
         set((state) => {
-          state.offsetX = x
-          state.offsetY = y
+          state.offsetX = offsetX
+          state.offsetY = offsetY
         }),
       setShadow: (shadow) =>
         set((state) => {
           Object.assign(state.shadow, shadow)
         }),
-      setAspectRatio: (v) =>
+      setAspectRatio: (value) =>
         set((state) => {
-          state.aspectRatio = v
+          state.aspectRatio = value
         }),
-      setExportFormat: (v) =>
+      setExportFormat: (value) =>
         set((state) => {
-          state.exportFormat = v
+          state.exportFormat = value
         }),
-      setExportResolution: (v) =>
+      setExportResolution: (value) =>
         set((state) => {
           const clamped = Math.min(
             EXPORT_RESOLUTION_MAX,
-            Math.max(EXPORT_RESOLUTION_MIN, Math.round(Number(v)))
+            Math.max(EXPORT_RESOLUTION_MIN, Math.round(Number(value)))
           )
           if (clamped === 1) {
             state.exportResolution = 1

@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { useCallback, type ReactNode } from 'react'
 
 import {
   BackgroundTypeLinearGlyph,
@@ -76,38 +76,51 @@ export const BackgroundPanel = () => {
   const background = useEditorStore((state) => state.background)
   const setBackground = useEditorStore((state) => state.setBackground)
 
-  const handleChange = (value: string) => {
-    const option = BACKGROUND_OPTIONS.find((item) => item.value === value)
-    if (!option) {
-      return
-    }
-    const backgroundType = option.value
-    if (backgroundType === 'radial') {
-      setBackground({ type: backgroundType, gradient: { ...background.gradient, type: 'radial' } })
-    } else if (backgroundType === 'mesh') {
-      setBackground({ type: backgroundType, gradient: { ...background.gradient, type: 'mesh' } })
-    } else if (backgroundType === 'gradient') {
-      setBackground({ type: backgroundType, gradient: { ...background.gradient, type: 'linear' } })
-    } else {
-      setBackground({ type: backgroundType })
-    }
-  }
+  const handleChange = useCallback(
+    (value: string) => {
+      const option = BACKGROUND_OPTIONS.find((item) => item.value === value)
+      if (!option) return
+      const backgroundType = option.value
+      if (backgroundType === 'radial') {
+        setBackground({ type: backgroundType, gradient: { ...background.gradient, type: 'radial' } })
+      } else if (backgroundType === 'mesh') {
+        setBackground({ type: backgroundType, gradient: { ...background.gradient, type: 'mesh' } })
+      } else if (backgroundType === 'gradient') {
+        setBackground({ type: backgroundType, gradient: { ...background.gradient, type: 'linear' } })
+      } else {
+        setBackground({ type: backgroundType })
+      }
+    },
+    [background.gradient, setBackground]
+  )
 
-  const handleGradientChange = (config: GradientConfig) => {
-    setBackground({ type: 'gradient', gradient: config })
-  }
+  const handleGradientChange = useCallback(
+    (config: GradientConfig) => {
+      setBackground({ type: 'gradient', gradient: config })
+    },
+    [setBackground]
+  )
 
-  const handleRadialPresetChange = (config: GradientConfig) => {
-    setBackground({ type: 'radial', gradient: { ...config, type: 'radial' } })
-  }
+  const handleRadialPresetChange = useCallback(
+    (config: GradientConfig) => {
+      setBackground({ type: 'radial', gradient: { ...config, type: 'radial' } })
+    },
+    [setBackground]
+  )
 
-  const handleSolidChange = (color: string) => {
-    setBackground({ type: 'solid', solid: color })
-  }
+  const handleSolidChange = useCallback(
+    (color: string) => {
+      setBackground({ type: 'solid', solid: color })
+    },
+    [setBackground]
+  )
 
-  const handleMeshPresetChange = (config: GradientConfig) => {
-    setBackground({ type: 'mesh', gradient: { ...config, type: 'mesh' } })
-  }
+  const handleMeshPresetChange = useCallback(
+    (config: GradientConfig) => {
+      setBackground({ type: 'mesh', gradient: { ...config, type: 'mesh' } })
+    },
+    [setBackground]
+  )
 
   return (
     <div data-testid="background-panel" className="flex flex-col gap-3">

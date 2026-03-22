@@ -5,6 +5,7 @@ import {
   IconBoxPadding,
   IconResize,
 } from '@tabler/icons-react'
+import { useCallback } from 'react'
 
 import { useEditorStore } from '@/store/useEditorStore'
 
@@ -24,6 +25,15 @@ export const ImagePanel = () => {
   const offsetX = useEditorStore((state) => state.offsetX)
   const offsetY = useEditorStore((state) => state.offsetY)
   const setOffset = useEditorStore((state) => state.setOffset)
+
+  const handleOffsetXChange = useCallback(
+    (value: number) => setOffset(value, offsetY),
+    [offsetY, setOffset]
+  )
+  const handleOffsetYChange = useCallback(
+    (value: number) => setOffset(offsetX, value),
+    [offsetX, setOffset]
+  )
 
   const shadow = useEditorStore((state) => state.shadow)
   const setShadow = useEditorStore((state) => state.setShadow)
@@ -62,7 +72,7 @@ export const ImagePanel = () => {
         icon={<IconArrowsMoveHorizontal stroke={1.5} />}
         label="Offset X"
         value={offsetX}
-        onChange={(value) => setOffset(value, offsetY)}
+        onChange={handleOffsetXChange}
         min={-100}
         max={100}
         step={1}
@@ -71,7 +81,7 @@ export const ImagePanel = () => {
         icon={<IconArrowsMoveVertical stroke={1.5} />}
         label="Offset Y"
         value={offsetY}
-        onChange={(value) => setOffset(offsetX, value)}
+        onChange={handleOffsetYChange}
         min={-100}
         max={100}
         step={1}

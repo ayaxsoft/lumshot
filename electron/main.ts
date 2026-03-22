@@ -3,9 +3,26 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import fs from 'node:fs/promises'
 import { createRequire } from 'node:module'
+import type { ExportPayload } from '../src/store/types'
+import {
+  ALLOWED_EXPORT_FORMATS,
+  WINDOW_DEFAULT_WIDTH_PX,
+  WINDOW_DEFAULT_HEIGHT_PX,
+  WINDOW_TRAFFIC_LIGHT_X_PX,
+  WINDOW_TRAFFIC_LIGHT_Y_PX,
+} from '../src/constants'
 
 const require = createRequire(import.meta.url)
 const sharp = require('sharp')
+
+const MIME_BY_EXTENSION: Record<string, string> = {
+  png: 'image/png',
+  jpg: 'image/jpeg',
+  jpeg: 'image/jpeg',
+  webp: 'image/webp',
+  gif: 'image/gif',
+  svg: 'image/svg+xml',
+}
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -25,11 +42,15 @@ const createWindow = () => {
   win = new BrowserWindow({
     title: 'Lumshot',
     icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
-    width: 1200,
-    height: 800,
+    width: WINDOW_DEFAULT_WIDTH_PX,
+    height: WINDOW_DEFAULT_HEIGHT_PX,
     show: false,
+    titleBarStyle: 'hidden',
+    trafficLightPosition: { x: WINDOW_TRAFFIC_LIGHT_X_PX, y: WINDOW_TRAFFIC_LIGHT_Y_PX },
     webPreferences: {
       preload: path.join(__dirname, 'preload.mjs'),
+      contextIsolation: true,
+      nodeIntegration: false,
     },
   })
 
@@ -66,7 +87,7 @@ ipcMain.handle('open-file', async () => {
   const { width, height } = await sharp(buffer).metadata()
   const base64 = buffer.toString('base64')
   const ext = path.extname(filePath).slice(1).toLowerCase()
-  const mime = ext === 'jpg' ? 'image/jpeg' : `image/${ext}`
+  const mime = MIME_BY_EXTENSION[ext] ?? 'application/octet-stream'
 
   return {
     path: filePath,
@@ -78,7 +99,7 @@ ipcMain.handle('open-file', async () => {
 
 ipcMain.handle(
   'export-image',
-  async (_event, payload: { dataUrl: string; format: string; resolution: number }) => {
+  async (_event, payload: ExportPayload) => {
     const { dataUrl, format, resolution } = payload
 
     const { canceled, filePath } = await dialog.showSaveDialog({
@@ -90,14 +111,22 @@ ipcMain.handle(
       return { success: false }
     }
 
+    if (!ALLOWED_EXPORT_FORMATS.includes(format as (typeof ALLOWED_EXPORT_FORMATS)[number])) {
+      return { success: false, error: 'Invalid export format.' }
+    }
+
     try {
       const commaIndex = dataUrl.indexOf(',')
-      const base64Payload = commaIndex >= 0 ? dataUrl.slice(commaIndex + 1) : ''
-      const inputBuffer = Buffer.from(base64Payload, 'base64')
+      if (commaIndex < 0) {
+        throw new Error('Invalid data URL.')
+      }
+      const inputBuffer = Buffer.from(dataUrl.slice(commaIndex + 1), 'base64')
 
-      const sharpFormat = format === 'jpeg' ? 'jpeg' : format === 'webp' ? 'webp' : 'png'
-
-      await sharp(inputBuffer).toFormat(sharpFormat).toFile(filePath)
+      if (format === 'png') {
+        await fs.writeFile(filePath, inputBuffer)
+      } else {
+        await sharp(inputBuffer).toFormat(format).toFile(filePath)
+      }
 
       return { success: true }
     } catch (err) {
