@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { CANVAS_EXPORT_SURFACE_TEST_ID } from '@/constants'
 import { useEditorStore } from '../../store/useEditorStore'
 import { buildCanvasFrameBoxStyle } from '../../utils/build-canvas-frame-box-style'
@@ -18,12 +19,18 @@ const CanvasPreview = () => {
   const offsetY = useEditorStore((state) => state.offsetY)
   const aspectRatio = useEditorStore((state) => state.aspectRatio)
 
-  const imageConfig = { padding, borderRadius, scale, offsetX, offsetY, shadow, aspectRatio }
+  const imageConfig = useMemo(
+    () => ({ padding, borderRadius, scale, offsetX, offsetY, shadow, aspectRatio }),
+    [padding, borderRadius, scale, offsetX, offsetY, shadow, aspectRatio]
+  )
 
-  const emptyFrameStyle = {
-    ...buildCanvasFrameBoxStyle(aspectRatio),
-    ...buildImageFrameStyle(borderRadius, offsetX, offsetY, shadow),
-  }
+  const emptyFrameStyle = useMemo(
+    () => ({
+      ...buildCanvasFrameBoxStyle(aspectRatio),
+      ...buildImageFrameStyle(borderRadius, offsetX, offsetY, shadow),
+    }),
+    [aspectRatio, borderRadius, offsetX, offsetY, shadow]
+  )
 
   return (
     <div

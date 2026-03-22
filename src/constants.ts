@@ -68,43 +68,108 @@ export const GRADIENT_ANGLES = {
 
 const GRADIENT_PRESET_BASE = [
   {
-    label: 'Sunset',
+    label: 'Scarlet',
     stops: [
-      { color: '#F97316', position: 0 },
-      { color: '#EC4899', position: 100 },
+      { color: '#FF5757', position: 0 },
+      { color: '#8C52FF', position: 100 },
     ],
     angle: GRADIENT_ANGLES.LINEAR,
   },
   {
-    label: 'Ocean',
+    label: 'Grape',
     stops: [
-      { color: '#06B6D4', position: 0 },
-      { color: '#6366F1', position: 100 },
+      { color: '#9747FF', position: 0 },
+      { color: '#FF4FBB', position: 100 },
     ],
     angle: GRADIENT_ANGLES.LINEAR,
   },
   {
-    label: 'Forest',
+    label: 'Blush',
     stops: [
-      { color: '#10B981', position: 0 },
-      { color: '#0EA5E9', position: 100 },
+      { color: '#FFAFCC', position: 0 },
+      { color: '#C4B5FD', position: 100 },
     ],
     angle: GRADIENT_ANGLES.LINEAR,
   },
   {
-    label: 'Candy',
+    label: 'Tropical',
     stops: [
-      { color: '#F43F5E', position: 0 },
-      { color: '#A855F7', position: 100 },
+      { color: '#4158D0', position: 0 },
+      { color: '#C850C0', position: 46 },
+      { color: '#FFCC70', position: 100 },
     ],
     angle: GRADIENT_ANGLES.LINEAR,
   },
   {
-    label: 'Midnight',
+    label: 'Chromatic',
     stops: [
-      { color: '#1E1B4B', position: 0 },
-      { color: '#312E81', position: 50 },
-      { color: '#4F46E5', position: 100 },
+      { color: '#0ED2F7', position: 0 },
+      { color: '#B2FEFA', position: 50 },
+      { color: '#FF6FD8', position: 100 },
+    ],
+    angle: GRADIENT_ANGLES.LINEAR,
+  },
+  {
+    label: 'Lagoon',
+    stops: [
+      { color: '#67E8F9', position: 0 },
+      { color: '#A78BFA', position: 100 },
+    ],
+    angle: GRADIENT_ANGLES.LINEAR,
+  },
+  {
+    label: 'Mint',
+    stops: [
+      { color: '#A78BFA', position: 0 },
+      { color: '#6EE7B7', position: 100 },
+    ],
+    angle: GRADIENT_ANGLES.LINEAR,
+  },
+  {
+    label: 'Silver',
+    stops: [
+      { color: '#D1D5DB', position: 0 },
+      { color: '#F3F4F6', position: 100 },
+    ],
+    angle: GRADIENT_ANGLES.LINEAR,
+  },
+  {
+    label: 'Obsidian',
+    stops: [
+      { color: '#111827', position: 0 },
+      { color: '#374151', position: 100 },
+    ],
+    angle: GRADIENT_ANGLES.LINEAR,
+  },
+  {
+    label: 'Ice',
+    stops: [
+      { color: '#BAE6FD', position: 0 },
+      { color: '#E0F2FE', position: 100 },
+    ],
+    angle: GRADIENT_ANGLES.LINEAR,
+  },
+  {
+    label: 'Sky',
+    stops: [
+      { color: '#3B82F6', position: 0 },
+      { color: '#93C5FD', position: 100 },
+    ],
+    angle: GRADIENT_ANGLES.LINEAR,
+  },
+  {
+    label: 'Indigo',
+    stops: [
+      { color: '#4F46E5', position: 0 },
+      { color: '#818CF8', position: 100 },
+    ],
+    angle: GRADIENT_ANGLES.LINEAR,
+  },
+  {
+    label: 'Sunrise',
+    stops: [
+      { color: '#FDE68A', position: 0 },
+      { color: '#FCA5A5', position: 100 },
     ],
     angle: GRADIENT_ANGLES.LINEAR,
   },
@@ -112,42 +177,55 @@ const GRADIENT_PRESET_BASE = [
     label: 'Peach',
     stops: [
       { color: '#FDBA74', position: 0 },
-      { color: '#FB7185', position: 100 },
+      { color: '#FDE68A', position: 100 },
     ],
     angle: GRADIENT_ANGLES.LINEAR,
   },
   {
-    label: 'Aurora',
+    label: 'Tangerine',
+    stops: [
+      { color: '#FB923C', position: 0 },
+      { color: '#EF4444', position: 100 },
+    ],
+    angle: GRADIENT_ANGLES.LINEAR,
+  },
+  {
+    label: 'Lime',
+    stops: [
+      { color: '#BEF264', position: 0 },
+      { color: '#FDE047', position: 100 },
+    ],
+    angle: GRADIENT_ANGLES.LINEAR,
+  },
+  {
+    label: 'Emerald',
     stops: [
       { color: '#34D399', position: 0 },
-      { color: '#818CF8', position: 50 },
-      { color: '#F472B6', position: 100 },
+      { color: '#A3E635', position: 100 },
     ],
     angle: GRADIENT_ANGLES.LINEAR,
   },
   {
-    label: 'Dusk',
+    label: 'Spring',
     stops: [
-      { color: '#1E293B', position: 0 },
-      { color: '#7C3AED', position: 100 },
+      { color: '#A3E635', position: 0 },
+      { color: '#86EFAC', position: 100 },
     ],
     angle: GRADIENT_ANGLES.LINEAR,
   },
   {
-    label: 'Flame',
+    label: 'Rose',
     stops: [
-      { color: '#EF4444', position: 0 },
-      { color: '#F97316', position: 50 },
-      { color: '#FACC15', position: 100 },
+      { color: '#FBCFE8', position: 0 },
+      { color: '#DDD6FE', position: 100 },
     ],
-    angle: 90,
+    angle: GRADIENT_ANGLES.LINEAR,
   },
   {
-    label: 'Lavender',
+    label: 'Violet',
     stops: [
       { color: '#C4B5FD', position: 0 },
-      { color: '#818CF8', position: 50 },
-      { color: '#6366F1', position: 100 },
+      { color: '#818CF8', position: 100 },
     ],
     angle: GRADIENT_ANGLES.LINEAR,
   },
@@ -237,3 +315,14 @@ export const CANVAS_AUTO_FALLBACK_ASPECT_HEIGHT = 9
 
 export const ASPECT_RATIO_SWATCH_AUTO_PREVIEW_MAX_PERCENT = 52
 export const ASPECT_RATIO_SWATCH_AUTO_PREVIEW_MAX_REM = 1.85
+
+export const WINDOW_DEFAULT_WIDTH_PX = 1200
+export const WINDOW_DEFAULT_HEIGHT_PX = 800
+export const WINDOW_DRAG_REGION_HEIGHT_PX = 40
+export const WINDOW_TRAFFIC_LIGHT_X_PX = 12
+export const WINDOW_TRAFFIC_LIGHT_Y_PX = 14
+
+export const ALLOWED_EXPORT_FORMATS = ['png', 'jpeg', 'webp'] as const
+
+export const GRADIENT_PRESETS_COLLAPSED_COUNT = 4
+export const GRADIENT_PRESETS_PEEK_COUNT = 2

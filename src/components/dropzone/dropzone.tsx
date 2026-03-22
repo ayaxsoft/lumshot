@@ -20,17 +20,19 @@ export const DropZone = () => {
 
       const [file] = files
       const reader = new FileReader()
-      reader.onload = (ev) => {
+      reader.onload = (event) => {
+        const result = event.target?.result
+        if (typeof result !== 'string') return
         const image = new Image()
         image.onload = () => {
           setImage({
             path: file.name,
-            dataUrl: ev.target?.result as string,
+            dataUrl: result,
             naturalWidth: image.width,
             naturalHeight: image.height,
           })
         }
-        image.src = ev.target?.result as string
+        image.src = result
       }
       reader.readAsDataURL(file)
     },

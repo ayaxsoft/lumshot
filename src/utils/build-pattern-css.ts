@@ -22,16 +22,16 @@ export const buildPatternCSS = (config: PatternConfig): string => {
     case 'circles':
       return `${background} radial-gradient(circle at 50% 50%, transparent 28%, ${foreground} 29%, ${foreground} 42%, transparent 43%) 0 0 / ${patternSize} ${patternSize}`
     case 'hexagons': {
-      const hexH = Math.round(patternUnit * 1.75)
-      const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${patternUnit}' height='${hexH}' viewBox='0 0 28 49'><rect width='28' height='49' fill='${background}'/><g fill='${foreground}'><path d='M14 0L28 8.5v14L14 31 0 22.5V8.5z'/><path d='M14 17L28 25.5v14L14 48 0 39.5V25.5z'/></g></svg>`
-      return `${background} ${svgPatternUrl(svg)} 0 0 / ${patternUnit}px ${hexH}px`
+      const hexagonHeight = Math.round(patternUnit * 1.75)
+      const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${patternUnit}' height='${hexagonHeight}' viewBox='0 0 28 49'><rect width='28' height='49' fill='${background}'/><g fill='${foreground}'><path d='M14 0L28 8.5v14L14 31 0 22.5V8.5z'/><path d='M14 17L28 25.5v14L14 48 0 39.5V25.5z'/></g></svg>`
+      return `${background} ${svgPatternUrl(svg)} 0 0 / ${patternUnit}px ${hexagonHeight}px`
     }
     case 'triangles': {
-      const base = patternUnit * 2
-      const triH = Math.round(base * EQUILATERAL_TRIANGLE_HEIGHT_RATIO)
-      const half = base / 2
-      const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${base}' height='${triH}' viewBox='0 0 ${base} ${triH}'><rect width='${base}' height='${triH}' fill='${background}'/><polygon fill='${foreground}' points='${half},0 ${base},${triH} 0,${triH}'/></svg>`
-      return `${background} ${svgPatternUrl(svg)} 0 0 / ${base}px ${triH}px`
+      const triangleBase = patternUnit * 2
+      const triangleHeight = Math.round(triangleBase * EQUILATERAL_TRIANGLE_HEIGHT_RATIO)
+      const triangleHalfBase = triangleBase / 2
+      const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${triangleBase}' height='${triangleHeight}' viewBox='0 0 ${triangleBase} ${triangleHeight}'><rect width='${triangleBase}' height='${triangleHeight}' fill='${background}'/><polygon fill='${foreground}' points='${triangleHalfBase},0 ${triangleBase},${triangleHeight} 0,${triangleHeight}'/></svg>`
+      return `${background} ${svgPatternUrl(svg)} 0 0 / ${triangleBase}px ${triangleHeight}px`
     }
     default:
       return background
