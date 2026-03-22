@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import CanvasPreview from '@/components/canvas/canvas-preview'
-import type { BackgroundConfig, ImageMeta, ShadowConfig } from '@/store/types'
+import type { AspectRatio, BackgroundConfig, ImageMeta, ShadowConfig } from '@/store/types'
 
 const { editorSlice } = vi.hoisted(() => {
   const background: BackgroundConfig = {
@@ -42,6 +42,7 @@ const { editorSlice } = vi.hoisted(() => {
     scale: 1,
     offsetX: 0,
     offsetY: 0,
+    aspectRatio: 'auto' as AspectRatio,
   }
 
   return { editorSlice }
@@ -78,11 +79,34 @@ describe('CanvasPreview', () => {
     render(<CanvasPreview />)
     const frame = screen.getByTestId('dropzone-frame')
     expect(frame).toHaveStyle({
+      aspectRatio: '16 / 9',
       borderRadius: '18px',
+      maxHeight: '100%',
+      maxWidth: '100%',
       transform: 'translate(6px, -2px)',
+      width: '100%',
     })
-    const widthWrapper = frame.parentElement
-    expect(widthWrapper).toHaveStyle({ width: '80%' })
+    expect(screen.getByTestId('canvas-frame-inset')).toHaveStyle({
+      top: '10%',
+      bottom: '10%',
+      left: '10%',
+      right: '10%',
+    })
+    expect(screen.getByTestId('canvas-frame-scale-slot')).toHaveStyle({
+      width: '100%',
+      height: '100%',
+    })
+  })
+
+  it('should apply aspect ratio from store to the dropzone frame', () => {
+    editorSlice.aspectRatio = '1:1'
+    render(<CanvasPreview />)
+    expect(screen.getByTestId('dropzone-frame')).toHaveStyle({
+      aspectRatio: '1 / 1',
+      maxHeight: '100%',
+      maxWidth: '100%',
+      width: '100%',
+    })
   })
 
   it('should render canvas, background and image layers when image is set', () => {

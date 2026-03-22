@@ -1,4 +1,4 @@
-import type { MeshRadialLayerSpec, PatternPreset } from './store/types'
+import type { AspectRatio, MeshRadialLayerSpec, PatternPreset } from './store/types'
 
 export const BACKGROUND_TYPE_GLYPH_VIEWBOX_PX = 24
 
@@ -190,5 +190,38 @@ export const PATTERN_PRESETS: PatternPreset[] = [
     foreground: '#ffffff',
     background: '#000000',
     size: 16,
+  },
+]
+
+export const CANVAS_FIXED_ASPECT_RATIO_CSS: Record<Exclude<AspectRatio, 'auto'>, string> = {
+  '1:1': '1 / 1',
+  '4:3': '4 / 3',
+  '16:9': '16 / 9',
+  '9:16': '9 / 16',
+}
+
+export const CANVAS_AUTO_FALLBACK_ASPECT_WIDTH = 16
+export const CANVAS_AUTO_FALLBACK_ASPECT_HEIGHT = 9
+
+export const CANVAS_OPTIONS: { label: string; value: AspectRatio }[] = [
+  {
+    label: 'Auto',
+    value: 'auto',
+  },
+  {
+    label: '1:1',
+    value: '1:1',
+  },
+  {
+    label: '4:3',
+    value: '4:3',
+  },
+  {
+    label: '16:9',
+    value: '16:9',
+  },
+  {
+    label: '9:16',
+    value: '9:16',
   },
 ]

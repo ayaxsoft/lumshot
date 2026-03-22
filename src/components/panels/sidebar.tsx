@@ -1,6 +1,7 @@
 import { Section } from '@/components/ui/section'
 import { BackgroundPanel } from './background-panel'
 import { ImagePanel } from './image-panel'
+import { CanvasPanel } from './canvas-panel'
 
 export const Sidebar = () => {
   return (
@@ -16,7 +17,7 @@ export const Sidebar = () => {
           <ImagePanel />
         </Section>
         <Section title="Canvas" defaultOpen>
-          <div className="flex flex-col gap-2"></div>
+          <CanvasPanel />
         </Section>
         <Section title="Export" defaultOpen>
           <div className="flex flex-col gap-2"></div>

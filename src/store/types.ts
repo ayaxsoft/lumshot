@@ -13,12 +13,14 @@ export type AspectRatio = '1:1' | '4:3' | '16:9' | '9:16' | 'auto'
 
 export type ExportFormat = 'png' | 'webp' | 'jpeg'
 
-// Image loaded
-export interface ImageMeta {
-  path: string
-  dataUrl: string
+export interface NaturalImageSize {
   naturalWidth: number
   naturalHeight: number
+}
+
+export interface ImageMeta extends NaturalImageSize {
+  path: string
+  dataUrl: string
 }
 
 export interface ImageConfig {
@@ -28,6 +30,7 @@ export interface ImageConfig {
   offsetX: number
   offsetY: number
   shadow: ShadowConfig
+  aspectRatio: AspectRatio
 }
 
 export interface GradientStop {
