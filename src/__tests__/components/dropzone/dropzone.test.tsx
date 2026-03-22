@@ -47,6 +47,7 @@ describe('DropZone', () => {
     vi.clearAllMocks()
     window.lumshotAPI = {
       openFile: vi.fn(),
+      exportImage: vi.fn().mockResolvedValue({ success: true }),
     }
   })
 

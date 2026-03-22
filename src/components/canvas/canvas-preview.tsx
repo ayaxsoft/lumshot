@@ -1,3 +1,4 @@
+import { CANVAS_EXPORT_SURFACE_TEST_ID } from '@/constants'
 import { useEditorStore } from '../../store/useEditorStore'
 import { buildCanvasFrameBoxStyle } from '../../utils/build-canvas-frame-box-style'
 import { buildImageFrameStyle } from '../../utils/build-image-frame-style'
@@ -29,7 +30,10 @@ const CanvasPreview = () => {
       data-testid="canvas-preview"
       className="absolute inset-0 flex items-center justify-center bg-neutral-950"
     >
-      <div className="relative h-[90%] w-[90%] overflow-hidden rounded-3xl shadow-2xl">
+      <div
+        data-testid={CANVAS_EXPORT_SURFACE_TEST_ID}
+        className="relative h-[90%] w-[90%] overflow-hidden rounded-3xl shadow-2xl"
+      >
         <BackgroundLayer background={background} />
         {image ? (
           <ImageLayer image={image} config={imageConfig} />

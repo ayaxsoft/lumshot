@@ -12,6 +12,8 @@ export const COLOR_SWATCH_POPOVER_CONTENT_WIDTH_PX = 220
 export const EXPORT_RESOLUTION_MIN = 1
 export const EXPORT_RESOLUTION_MAX = 3
 
+export const CANVAS_EXPORT_SURFACE_TEST_ID = 'canvas-export-surface'
+
 export const MESH_BASE_LINEAR_ANGLE_DEG = 160
 
 export const MESH_FALLBACK_STOP_0_COLOR = '#7C3AED'

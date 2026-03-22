@@ -21,6 +21,11 @@ export type AspectRatio =
   | '2:3'
   | '9:16'
 
+export interface ExportPayload {
+  dataUrl: string
+  format: ExportFormat
+  resolution: number
+}
 export interface CanvasAspectRatioOption {
   label: string
   value: AspectRatio
