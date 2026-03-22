@@ -7,6 +7,9 @@ describe('resolveCanvasAspectRatioCss', () => {
     expect(resolveCanvasAspectRatioCss('1:1')).toBe('1 / 1')
     expect(resolveCanvasAspectRatioCss('4:3')).toBe('4 / 3')
     expect(resolveCanvasAspectRatioCss('16:9')).toBe('16 / 9')
+    expect(resolveCanvasAspectRatioCss('3:2')).toBe('3 / 2')
+    expect(resolveCanvasAspectRatioCss('5:4')).toBe('5 / 4')
+    expect(resolveCanvasAspectRatioCss('4:5')).toBe('4 / 5')
     expect(resolveCanvasAspectRatioCss('9:16')).toBe('9 / 16')
   })
 

@@ -28,6 +28,30 @@ describe('buildCanvasFrameBoxStyle', () => {
       maxWidth: '100%',
       maxHeight: '100%',
     })
+    expect(buildCanvasFrameBoxStyle('4:5')).toEqual({
+      aspectRatio: '4 / 5',
+      height: '100%',
+      width: 'auto',
+      maxWidth: '100%',
+      maxHeight: '100%',
+    })
+  })
+
+  it('should map additional landscape presets', () => {
+    expect(buildCanvasFrameBoxStyle('3:2')).toEqual({
+      aspectRatio: '3 / 2',
+      width: '100%',
+      height: 'auto',
+      maxWidth: '100%',
+      maxHeight: '100%',
+    })
+    expect(buildCanvasFrameBoxStyle('5:4')).toEqual({
+      aspectRatio: '5 / 4',
+      width: '100%',
+      height: 'auto',
+      maxWidth: '100%',
+      maxHeight: '100%',
+    })
   })
 
   it('should use natural aspect with width-first when image is wider than tall', () => {
