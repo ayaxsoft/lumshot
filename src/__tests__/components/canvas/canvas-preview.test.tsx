@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import CanvasPreview from '@/components/canvas/canvas-preview'
+import { CANVAS_EXPORT_SURFACE_TEST_ID } from '@/constants'
 import type { AspectRatio, BackgroundConfig, ImageMeta, ShadowConfig } from '@/store/types'
 
 const { editorSlice } = vi.hoisted(() => {
@@ -67,6 +68,7 @@ describe('CanvasPreview', () => {
   it('should render DropZone when there is no image', () => {
     render(<CanvasPreview />)
     expect(screen.getByTestId('canvas-preview')).toBeInTheDocument()
+    expect(screen.getByTestId(CANVAS_EXPORT_SURFACE_TEST_ID)).toBeInTheDocument()
     expect(screen.getByTestId('dropzone')).toBeInTheDocument()
   })
 
@@ -113,6 +115,7 @@ describe('CanvasPreview', () => {
     editorSlice.image = sampleImage
     render(<CanvasPreview />)
     expect(screen.getByTestId('canvas-preview')).toBeInTheDocument()
+    expect(screen.getByTestId(CANVAS_EXPORT_SURFACE_TEST_ID)).toBeInTheDocument()
     expect(screen.getByTestId('background-layer')).toBeInTheDocument()
     expect(screen.getByTestId('image-layer')).toBeInTheDocument()
   })

@@ -71,6 +71,37 @@ ipcMain.handle('open-file', async () => {
   }
 })
 
+ipcMain.handle(
+  'export-image',
+  async (_event, payload: { dataUrl: string; format: string; resolution: number }) => {
+    const { dataUrl, format } = payload
+
+    const { canceled, filePath } = await dialog.showSaveDialog({
+      defaultPath: `lumshot-export.${format}`,
+      filters: [{ name: 'Image', extensions: [format] }],
+    })
+
+    if (canceled || filePath === undefined || filePath === '') {
+      return { success: false }
+    }
+
+    try {
+      const commaIndex = dataUrl.indexOf(',')
+      const base64Payload = commaIndex >= 0 ? dataUrl.slice(commaIndex + 1) : ''
+      const inputBuffer = Buffer.from(base64Payload, 'base64')
+
+      const sharpFormat = format === 'jpeg' ? 'jpeg' : format === 'webp' ? 'webp' : 'png'
+
+      await sharp(inputBuffer).toFormat(sharpFormat).toFile(filePath)
+
+      return { success: true }
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err)
+      return { success: false, error: message }
+    }
+  }
+)
+
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()

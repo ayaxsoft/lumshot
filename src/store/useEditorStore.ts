@@ -67,7 +67,7 @@ const initialState: EditorState = {
   shadow: defaultShadow,
   aspectRatio: 'auto',
   exportFormat: 'png',
-  exportResolution: 1,
+  exportResolution: 2,
 }
 
 export const useEditorStore = create<EditorState & EditorActions>()(
