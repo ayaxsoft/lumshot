@@ -1,5 +1,11 @@
 # Lumshot
 
+## 1.3.0
+
+### Minor Changes
+
+- f3b3123: Add clipboard paste support and replace image confirmation dialog
+
 ## 1.2.0
 
 ### Minor Changes
