@@ -79,10 +79,10 @@ ipcMain.handle('open-file', async () => {
 ipcMain.handle(
   'export-image',
   async (_event, payload: { dataUrl: string; format: string; resolution: number }) => {
-    const { dataUrl, format } = payload
+    const { dataUrl, format, resolution } = payload
 
     const { canceled, filePath } = await dialog.showSaveDialog({
-      defaultPath: `lumshot-export.${format}`,
+      defaultPath: `lumshot-export-${resolution}x.${format}`,
       filters: [{ name: 'Image', extensions: [format] }],
     })
 
