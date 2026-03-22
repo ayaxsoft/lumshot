@@ -27,7 +27,7 @@ export const SwatchTileButton = ({
       role="radio"
       aria-checked={isSelected}
       onClick={onClick}
-      className="flex w-full min-w-0 flex-col items-center gap-1.5 rounded-md text-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/55"
+      className="flex w-full min-w-0 flex-col items-center gap-1.5 rounded-md text-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/55 cursor-pointer"
     >
       {preview !== undefined ? (
         <>

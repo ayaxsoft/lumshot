@@ -60,7 +60,7 @@ export const GradientPresets = ({ config, onChange }: GradientPresetsProps) => {
           type="button"
           aria-label={isExpanded ? 'Show fewer presets' : 'Show all presets'}
           onClick={toggleExpanded}
-          className="flex w-full min-w-0 flex-col items-center gap-1.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/55"
+          className="flex w-full min-w-0 flex-col items-center gap-1.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/55 cursor-pointer"
         >
           <span className="relative w-full rounded-lg p-0.5">
             {!isExpanded &&
