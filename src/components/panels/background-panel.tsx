@@ -82,11 +82,17 @@ export const BackgroundPanel = () => {
       if (!option) return
       const backgroundType = option.value
       if (backgroundType === 'radial') {
-        setBackground({ type: backgroundType, gradient: { ...background.gradient, type: 'radial' } })
+        setBackground({
+          type: backgroundType,
+          gradient: { ...background.gradient, type: 'radial' },
+        })
       } else if (backgroundType === 'mesh') {
         setBackground({ type: backgroundType, gradient: { ...background.gradient, type: 'mesh' } })
       } else if (backgroundType === 'gradient') {
-        setBackground({ type: backgroundType, gradient: { ...background.gradient, type: 'linear' } })
+        setBackground({
+          type: backgroundType,
+          gradient: { ...background.gradient, type: 'linear' },
+        })
       } else {
         setBackground({ type: backgroundType })
       }

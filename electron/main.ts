@@ -97,44 +97,41 @@ ipcMain.handle('open-file', async () => {
   }
 })
 
-ipcMain.handle(
-  'export-image',
-  async (_event, payload: ExportPayload) => {
-    const { dataUrl, format, resolution } = payload
+ipcMain.handle('export-image', async (_event, payload: ExportPayload) => {
+  const { dataUrl, format, resolution } = payload
 
-    const { canceled, filePath } = await dialog.showSaveDialog({
-      defaultPath: `lumshot-export-${resolution}x.${format}`,
-      filters: [{ name: 'Image', extensions: [format] }],
-    })
+  const { canceled, filePath } = await dialog.showSaveDialog({
+    defaultPath: `lumshot-export-${resolution}x.${format}`,
+    filters: [{ name: 'Image', extensions: [format] }],
+  })
 
-    if (canceled || filePath === undefined || filePath === '') {
-      return { success: false }
-    }
-
-    if (!ALLOWED_EXPORT_FORMATS.includes(format as (typeof ALLOWED_EXPORT_FORMATS)[number])) {
-      return { success: false, error: 'Invalid export format.' }
-    }
-
-    try {
-      const commaIndex = dataUrl.indexOf(',')
-      if (commaIndex < 0) {
-        throw new Error('Invalid data URL.')
-      }
-      const inputBuffer = Buffer.from(dataUrl.slice(commaIndex + 1), 'base64')
-
-      if (format === 'png') {
-        await fs.writeFile(filePath, inputBuffer)
-      } else {
-        await sharp(inputBuffer).toFormat(format).toFile(filePath)
-      }
-
-      return { success: true }
-    } catch (err) {
-      const message = err instanceof Error ? err.message : String(err)
-      return { success: false, error: message }
-    }
+  if (canceled || filePath === undefined || filePath === '') {
+    return { success: false }
   }
-)
+
+  if (!ALLOWED_EXPORT_FORMATS.includes(format as (typeof ALLOWED_EXPORT_FORMATS)[number])) {
+    return { success: false, error: 'Invalid export format.' }
+  }
+
+  try {
+    const commaIndex = dataUrl.indexOf(',')
+    if (commaIndex < 0) {
+      throw new Error('Invalid data URL.')
+    }
+    const inputBuffer = Buffer.from(dataUrl.slice(commaIndex + 1), 'base64')
+
+    if (format === 'png') {
+      await fs.writeFile(filePath, inputBuffer)
+    } else {
+      await sharp(inputBuffer).toFormat(format).toFile(filePath)
+    }
+
+    return { success: true }
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err)
+    return { success: false, error: message }
+  }
+})
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
