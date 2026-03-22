@@ -11,7 +11,9 @@
 
 [Quick start](#quick-start) · [Scripts](#scripts) · [Tech stack](#tech-stack) · [Contributing](#contributing) · [Changesets](#changesets) · [License](#license) · [CI workflow](https://github.com/ayaxsoft/Lumshot/actions/workflows/ci.yml)
 
-![Lumshot](public/lumshot.jpeg)
+![Lumshot app](public/lumshot.jpeg)
+
+![Lumshot export](public/lumshot-export.png)
 
 </div>
 
