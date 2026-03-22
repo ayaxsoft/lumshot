@@ -38,6 +38,13 @@ describe('ImageLayer', () => {
     expect(img.className).toContain('object-contain')
   })
 
+  it('should use object-cover for fixed aspect ratios so the frame has no letterboxing gaps', () => {
+    render(<ImageLayer image={testImage()} config={baseConfig({ aspectRatio: '1:1' })} />)
+    const img = screen.getByRole('img', { name: 'test.png' })
+    expect(img.className).toContain('object-cover')
+    expect(img.className).not.toContain('object-contain')
+  })
+
   it('should apply symmetric inset from padding on all sides', () => {
     render(<ImageLayer image={testImage()} config={baseConfig({ padding: 10, scale: 1 })} />)
     const inset = screen.getByTestId('canvas-frame-inset')
