@@ -14,6 +14,9 @@ export const EXPORT_RESOLUTION_MAX = 3
 
 export const CANVAS_EXPORT_SURFACE_TEST_ID = 'canvas-export-surface'
 
+export const DROPZONE_ICON_SIZE_PX = 54
+export const DROPZONE_ICON_STROKE = 1.25
+
 export const MESH_BASE_LINEAR_ANGLE_DEG = 160
 
 export const MESH_FALLBACK_STOP_0_COLOR = '#7C3AED'

@@ -1,13 +1,16 @@
-import { useEditorStore } from '../../store/useEditorStore'
+import { IconPhotoPlus } from '@tabler/icons-react'
 import { useCallback } from 'react'
 
+import { DROPZONE_ICON_SIZE_PX, DROPZONE_ICON_STROKE } from '@/constants'
+import { useEditorStore } from '@/store/useEditorStore'
+
 export const DropZone = () => {
-  const setImage = useEditorStore((state) => state.setImage)
+  const setPendingImage = useEditorStore((state) => state.setPendingImage)
 
   const handleOpen = async () => {
     const image = await window.lumshotAPI.openFile()
     if (image) {
-      setImage(image)
+      setPendingImage(image)
     }
   }
 
@@ -25,7 +28,7 @@ export const DropZone = () => {
         if (typeof result !== 'string') return
         const image = new Image()
         image.onload = () => {
-          setImage({
+          setPendingImage({
             path: file.name,
             dataUrl: result,
             naturalWidth: image.width,
@@ -36,7 +39,7 @@ export const DropZone = () => {
       }
       reader.readAsDataURL(file)
     },
-    [setImage]
+    [setPendingImage]
   )
 
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -49,21 +52,22 @@ export const DropZone = () => {
       onClick={handleOpen}
       onDrop={handleDrop}
       onDragOver={handleDragOver}
-      className="flex flex-col items-center justify-center w-full h-full gap-4 cursor-pointer select-none text-white/40 hover:text-white/70 transition-colors"
+      className="group flex flex-col items-center justify-center w-full h-full gap-5 cursor-pointer select-none px-4"
     >
-      <svg
-        width="48"
-        height="48"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      >
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-        <polyline points="17 8 12 3 7 8" />
-        <line x1="12" y1="3" x2="12" y2="15" />
-      </svg>
-      <p className="text-sm">Drop an image or click to open</p>
+      <IconPhotoPlus
+        size={DROPZONE_ICON_SIZE_PX}
+        stroke={DROPZONE_ICON_STROKE}
+        className="text-white/45 transition-[color,transform] duration-200 group-hover:text-white/85 group-hover:scale-105"
+        aria-hidden
+      />
+      <div className="flex flex-col items-center gap-1.5 text-center max-w-xs">
+        <p className="text-sm font-medium tracking-tight text-white/75 transition-colors duration-200 group-hover:text-white/95">
+          Add an image
+        </p>
+        <p className="text-xs leading-relaxed text-white/38 transition-colors duration-200 group-hover:text-white/55">
+          Drop a file here, click to browse, or paste from the clipboard
+        </p>
+      </div>
     </div>
   )
 }

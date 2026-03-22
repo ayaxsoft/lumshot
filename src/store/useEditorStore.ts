@@ -44,6 +44,9 @@ const defaultShadow: ShadowConfig = {
 
 interface EditorActions {
   setImage: (image: ImageMeta) => void
+  setPendingImage: (image: ImageMeta) => void
+  confirmPendingImage: () => void
+  clearPendingImage: () => void
   setBackground: (background: Partial<BackgroundConfig>) => void
   setPadding: (value: number) => void
   setBorderRadius: (value: number) => void
@@ -58,6 +61,7 @@ interface EditorActions {
 
 const initialState: EditorState = {
   image: null,
+  pendingImage: null,
   background: defaultBackground,
   padding: 10,
   borderRadius: 12,
@@ -78,6 +82,25 @@ export const useEditorStore = create<EditorState & EditorActions>()(
       setImage: (image) =>
         set((state) => {
           state.image = image
+        }),
+      setPendingImage: (image) =>
+        set((state) => {
+          if (state.image === null) {
+            state.image = image
+          } else {
+            state.pendingImage = image
+          }
+        }),
+      confirmPendingImage: () =>
+        set((state) => {
+          if (state.pendingImage !== null) {
+            state.image = state.pendingImage
+            state.pendingImage = null
+          }
+        }),
+      clearPendingImage: () =>
+        set((state) => {
+          state.pendingImage = null
         }),
       setBackground: (background) =>
         set((state) => {
