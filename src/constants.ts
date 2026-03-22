@@ -2,6 +2,8 @@ import type { MeshRadialLayerSpec, PatternPreset } from './store/types'
 
 export const BACKGROUND_TYPE_GLYPH_VIEWBOX_PX = 24
 
+export const COLOR_SWATCH_POPOVER_CONTENT_WIDTH_PX = 220
+
 export const MESH_BASE_LINEAR_ANGLE_DEG = 160
 
 export const MESH_FALLBACK_STOP_0_COLOR = '#7C3AED'

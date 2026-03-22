@@ -9,6 +9,7 @@ import {
 import { useEditorStore } from '@/store/useEditorStore'
 
 import { Slider } from '../ui/slider'
+import { ShadowControls } from '../ui/shadow-controls'
 
 export const ImagePanel = () => {
   const padding = useEditorStore((state) => state.padding)
@@ -23,6 +24,9 @@ export const ImagePanel = () => {
   const offsetX = useEditorStore((state) => state.offsetX)
   const offsetY = useEditorStore((state) => state.offsetY)
   const setOffset = useEditorStore((state) => state.setOffset)
+
+  const shadow = useEditorStore((state) => state.shadow)
+  const setShadow = useEditorStore((state) => state.setShadow)
 
   return (
     <div data-testid="image-panel" className="flex flex-col gap-2">
@@ -52,6 +56,7 @@ export const ImagePanel = () => {
         min={0.5}
         max={1}
         step={0.01}
+        formatValue={(nextScale) => `${Math.round(nextScale * 100)}%`}
       />
       <Slider
         icon={<IconArrowsMoveHorizontal stroke={1.5} />}
@@ -71,6 +76,8 @@ export const ImagePanel = () => {
         max={100}
         step={1}
       />
+
+      <ShadowControls shadow={shadow} onChange={setShadow} />
     </div>
   )
 }

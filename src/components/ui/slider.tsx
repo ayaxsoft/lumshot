@@ -9,11 +9,22 @@ interface SliderProps {
   min: number
   max: number
   step: number
+  formatValue?: (value: number) => string
 }
 
-export const Slider = ({ label, icon, value, onChange, min, max, step }: SliderProps) => {
+export const Slider = ({
+  label,
+  icon,
+  value,
+  onChange,
+  min,
+  max,
+  step,
+  formatValue,
+}: SliderProps) => {
+  const displayedValue = formatValue !== undefined ? formatValue(value) : String(value)
   return (
-    <div data-testid="slider" className="flex items-center gap-3 rounded-lg bg-white/5 px-3 py-2.5">
+    <div data-testid="slider" className="flex items-center gap-3 rounded-lg bg-white/5 px-3 py-1.5">
       <div className="flex min-w-0 shrink-0 items-center gap-2 text-sm text-white/60">
         {icon !== undefined ? (
           <span className="flex shrink-0 text-white/45 [&_svg]:size-4" aria-hidden>
@@ -40,11 +51,11 @@ export const Slider = ({ label, icon, value, onChange, min, max, step }: SliderP
           <SliderTrack className="relative h-full w-full overflow-hidden rounded-md">
             <SliderRange className="hidden" />
           </SliderTrack>
-          <SliderThumb className="block h-5 w-2 rounded-md bg-white shadow focus:outline-none" />
+          <SliderThumb className="block h-5 w-5 rounded-full bg-white shadow focus:outline-none" />
         </SliderRoot>
       </div>
 
-      <span className="shrink-0 tabular-nums text-sm text-white/60">{value}</span>
+      <span className="shrink-0 tabular-nums text-sm text-white/60">{displayedValue}</span>
     </div>
   )
 }
