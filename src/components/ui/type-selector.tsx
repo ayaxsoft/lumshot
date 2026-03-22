@@ -5,7 +5,7 @@ import { SwatchTileButton } from '@/components/ui/swatch-tile-button'
 interface TypeSelectorOption {
   label: string
   value: string
-  icon: ReactNode
+  icon?: ReactNode
 }
 
 interface TypeSelectorProps {
