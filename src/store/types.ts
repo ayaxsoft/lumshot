@@ -9,7 +9,22 @@ export type PatternType =
   | 'triangles'
   | 'circles'
 
-export type AspectRatio = '1:1' | '4:3' | '16:9' | '9:16' | 'auto'
+export type AspectRatio =
+  | 'auto'
+  | '16:9'
+  | '3:2'
+  | '4:3'
+  | '5:4'
+  | '1:1'
+  | '4:5'
+  | '3:4'
+  | '2:3'
+  | '9:16'
+
+export interface CanvasAspectRatioOption {
+  label: string
+  value: AspectRatio
+}
 
 export type ExportFormat = 'png' | 'webp' | 'jpeg'
 

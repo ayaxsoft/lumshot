@@ -12,16 +12,24 @@ interface TypeSelectorProps {
   options: TypeSelectorOption[]
   value: string
   onChange: (value: string) => void
+  ariaLabel?: string
+  previewContain?: boolean
 }
 
-export const TypeSelector = ({ options, value, onChange }: TypeSelectorProps) => {
+export const TypeSelector = ({
+  options,
+  value,
+  onChange,
+  ariaLabel = 'Tipo de fondo',
+  previewContain = false,
+}: TypeSelectorProps) => {
   const columnCount = options.length
 
   return (
     <div
       data-testid="type-selector"
       role="radiogroup"
-      aria-label="Tipo de fondo"
+      aria-label={ariaLabel}
       className="grid w-full gap-x-2 gap-y-2"
       style={{
         gridTemplateColumns: `repeat(${columnCount}, minmax(0, 1fr))`,
@@ -34,6 +42,7 @@ export const TypeSelector = ({ options, value, onChange }: TypeSelectorProps) =>
           isSelected={option.value === value}
           onClick={() => onChange(option.value)}
           preview={option.icon}
+          previewContain={previewContain}
         />
       ))}
     </div>

@@ -2,6 +2,8 @@ import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
+import { EXPORT_RESOLUTION_MAX, EXPORT_RESOLUTION_MIN } from '@/constants'
+
 import {
   AspectRatio,
   BackgroundConfig,
@@ -50,7 +52,7 @@ interface EditorActions {
   setShadow: (shadow: Partial<ShadowConfig>) => void
   setAspectRatio: (v: AspectRatio) => void
   setExportFormat: (v: ExportFormat) => void
-  setExportResolution: (v: 1 | 2 | 3) => void
+  setExportResolution: (v: number) => void
   reset: () => void
 }
 
@@ -65,7 +67,7 @@ const initialState: EditorState = {
   shadow: defaultShadow,
   aspectRatio: 'auto',
   exportFormat: 'png',
-  exportResolution: 2,
+  exportResolution: 1,
 }
 
 export const useEditorStore = create<EditorState & EditorActions>()(
@@ -112,7 +114,17 @@ export const useEditorStore = create<EditorState & EditorActions>()(
         }),
       setExportResolution: (v) =>
         set((state) => {
-          state.exportResolution = v
+          const clamped = Math.min(
+            EXPORT_RESOLUTION_MAX,
+            Math.max(EXPORT_RESOLUTION_MIN, Math.round(Number(v)))
+          )
+          if (clamped === 1) {
+            state.exportResolution = 1
+          } else if (clamped === 2) {
+            state.exportResolution = 2
+          } else {
+            state.exportResolution = 3
+          }
         }),
       reset: () => set(() => ({ ...initialState })),
     })),

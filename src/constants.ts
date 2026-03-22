@@ -1,8 +1,16 @@
-import type { AspectRatio, MeshRadialLayerSpec, PatternPreset } from './store/types'
+import type {
+  AspectRatio,
+  CanvasAspectRatioOption,
+  MeshRadialLayerSpec,
+  PatternPreset,
+} from './store/types'
 
 export const BACKGROUND_TYPE_GLYPH_VIEWBOX_PX = 24
 
 export const COLOR_SWATCH_POPOVER_CONTENT_WIDTH_PX = 220
+
+export const EXPORT_RESOLUTION_MIN = 1
+export const EXPORT_RESOLUTION_MAX = 3
 
 export const MESH_BASE_LINEAR_ANGLE_DEG = 160
 
@@ -194,34 +202,36 @@ export const PATTERN_PRESETS: PatternPreset[] = [
 ]
 
 export const CANVAS_FIXED_ASPECT_RATIO_CSS: Record<Exclude<AspectRatio, 'auto'>, string> = {
-  '1:1': '1 / 1',
-  '4:3': '4 / 3',
   '16:9': '16 / 9',
+  '3:2': '3 / 2',
+  '4:3': '4 / 3',
+  '5:4': '5 / 4',
+  '1:1': '1 / 1',
+  '4:5': '4 / 5',
+  '3:4': '3 / 4',
+  '2:3': '2 / 3',
   '9:16': '9 / 16',
 }
+
+export const CANVAS_ASPECT_AUTO: CanvasAspectRatioOption = {
+  label: 'Auto',
+  value: 'auto',
+}
+
+export const CANVAS_ASPECT_PRESETS: CanvasAspectRatioOption[] = [
+  { label: '16:9', value: '16:9' },
+  { label: '1:1', value: '1:1' },
+  { label: '9:16', value: '9:16' },
+  { label: '3:2', value: '3:2' },
+  { label: '4:3', value: '4:3' },
+  { label: '5:4', value: '5:4' },
+  { label: '4:5', value: '4:5' },
+  { label: '3:4', value: '3:4' },
+  { label: '2:3', value: '2:3' },
+]
 
 export const CANVAS_AUTO_FALLBACK_ASPECT_WIDTH = 16
 export const CANVAS_AUTO_FALLBACK_ASPECT_HEIGHT = 9
 
-export const CANVAS_OPTIONS: { label: string; value: AspectRatio }[] = [
-  {
-    label: 'Auto',
-    value: 'auto',
-  },
-  {
-    label: '1:1',
-    value: '1:1',
-  },
-  {
-    label: '4:3',
-    value: '4:3',
-  },
-  {
-    label: '16:9',
-    value: '16:9',
-  },
-  {
-    label: '9:16',
-    value: '9:16',
-  },
-]
+export const ASPECT_RATIO_SWATCH_AUTO_PREVIEW_MAX_PERCENT = 52
+export const ASPECT_RATIO_SWATCH_AUTO_PREVIEW_MAX_REM = 1.85

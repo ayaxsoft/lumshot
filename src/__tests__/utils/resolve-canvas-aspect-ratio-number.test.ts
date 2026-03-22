@@ -7,6 +7,9 @@ describe('resolveCanvasAspectRatioNumber', () => {
     expect(resolveCanvasAspectRatioNumber('1:1')).toBe(1)
     expect(resolveCanvasAspectRatioNumber('4:3')).toBeCloseTo(4 / 3)
     expect(resolveCanvasAspectRatioNumber('16:9')).toBeCloseTo(16 / 9)
+    expect(resolveCanvasAspectRatioNumber('3:2')).toBeCloseTo(3 / 2)
+    expect(resolveCanvasAspectRatioNumber('5:4')).toBeCloseTo(5 / 4)
+    expect(resolveCanvasAspectRatioNumber('4:5')).toBeCloseTo(4 / 5)
     expect(resolveCanvasAspectRatioNumber('9:16')).toBeCloseTo(9 / 16)
   })
 

@@ -6,6 +6,7 @@ interface SwatchTileButtonProps {
   isSelected: boolean
   onClick: () => void
   preview?: ReactNode
+  previewContain?: boolean
   testId?: string
   animateWhenSelected?: boolean
 }
@@ -15,6 +16,7 @@ export const SwatchTileButton = ({
   isSelected,
   onClick,
   preview,
+  previewContain = false,
   testId,
   animateWhenSelected = false,
 }: SwatchTileButtonProps) => {
@@ -38,13 +40,19 @@ export const SwatchTileButton = ({
             <span
               aria-hidden
               className={cn(
-                'block aspect-square w-full overflow-hidden rounded-md transition-[transform,filter] duration-200 ease-out motion-reduce:transition-none [&>*]:size-full [&>*]:min-h-0 [&>*]:min-w-0',
+                'aspect-square w-full overflow-hidden rounded-md transition-[transform,filter] duration-200 ease-out motion-reduce:transition-none',
+                previewContain
+                  ? 'flex items-center justify-center [&>*]:max-h-full [&>*]:max-w-full'
+                  : 'block [&>*]:size-full [&>*]:min-h-0 [&>*]:min-w-0',
                 animateWhenSelected && isSelected
                   ? 'motion-safe:animate-gradient-preset-select motion-reduce:scale-[1.02]'
                   : !animateWhenSelected && isSelected
                     ? 'brightness-105'
                     : '',
-                !isSelected && 'ring-1 ring-inset ring-white/20 hover:brightness-[1.08]'
+                !isSelected &&
+                  (previewContain
+                    ? 'bg-white/[0.07] hover:bg-white/[0.11]'
+                    : 'ring-1 ring-inset ring-white/20 hover:brightness-[1.08]')
               )}
             >
               {preview}
