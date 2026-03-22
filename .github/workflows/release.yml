@@ -26,7 +26,7 @@ jobs:
         run: npm install
 
       - name: Create Release PR or version packages
-        uses: changesets/action@v3
+        uses: changesets/action@v1
         with:
           version: npm run changeset:version
           commit: 'chore: version packages'
