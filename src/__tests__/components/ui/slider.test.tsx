@@ -45,6 +45,21 @@ describe('Slider', () => {
     expect(screen.getByText('0.86')).toBeInTheDocument()
   })
 
+  it('should use formatValue for the visible value when provided', () => {
+    render(
+      <Slider
+        label="Scale"
+        value={1}
+        onChange={() => {}}
+        min={0.5}
+        max={1}
+        step={0.01}
+        formatValue={(nextScale) => `${Math.round(nextScale * 100)}%`}
+      />
+    )
+    expect(screen.getByText('100%')).toBeInTheDocument()
+  })
+
   it('should call onChange when the Radix thumb value changes via keyboard', () => {
     const onChange = vi.fn()
     render(<Slider label="Test" value={0} onChange={onChange} min={0} max={100} step={1} />)
