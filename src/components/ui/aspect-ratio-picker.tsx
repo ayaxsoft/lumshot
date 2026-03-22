@@ -25,7 +25,7 @@ export const AspectRatioPicker = ({ value, onChange }: AspectRatioPickerProps) =
         aria-checked={autoSelected}
         onClick={() => onChange(CANVAS_ASPECT_AUTO.value)}
         className={cn(
-          'flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-left text-sm transition-[box-shadow,filter] duration-200 ease-out motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/55',
+          'flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-left text-sm transition-[box-shadow,filter] duration-200 ease-out motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/55 cursor-pointer',
           autoSelected
             ? 'ring-2 ring-inset ring-white/85'
             : 'ring-1 ring-inset ring-white/20 hover:brightness-[1.08]'
@@ -59,7 +59,7 @@ export const AspectRatioPicker = ({ value, onChange }: AspectRatioPickerProps) =
                 aria-checked={isSelected}
                 onClick={() => onChange(option.value)}
                 className={cn(
-                  'flex min-w-0 w-full items-center justify-center gap-2 rounded-md px-1 py-2 text-[10px] leading-snug tracking-tight transition-[box-shadow,filter] duration-200 ease-out motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/55',
+                  'flex min-w-0 w-full items-center justify-center gap-2 rounded-md px-1 py-2 text-[10px] leading-snug tracking-tight transition-[box-shadow,filter] duration-200 ease-out motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/55 cursor-pointer',
                   isSelected
                     ? 'font-medium text-white ring-2 ring-inset ring-white/85'
                     : 'text-white/50 ring-1 ring-inset ring-white/20 hover:brightness-[1.08]'
