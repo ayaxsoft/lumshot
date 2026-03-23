@@ -7,6 +7,7 @@
   "author": "Ayaxsoft",
   "type": "module",
   "scripts": {
+    "postinstall": "electron-builder install-app-deps",
     "dev": "vite",
     "build": "tsc && vite build && electron-builder",
     "preview": "vite preview",

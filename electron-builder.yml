@@ -9,6 +9,8 @@ directories:
 files:
   - dist
   - dist-electron
+  - node_modules/sharp/**/*
+  - node_modules/@img/**/*
 
 publish:
   provider: github
