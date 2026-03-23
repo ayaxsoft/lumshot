@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { temporal } from 'zundo'
 import { devtools } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
@@ -76,81 +77,89 @@ const initialState: EditorState = {
 
 export const useEditorStore = create<EditorState & EditorActions>()(
   devtools(
-    immer((set) => ({
-      ...initialState,
+    temporal(
+      immer((set) => ({
+        ...initialState,
 
-      setImage: (image) =>
-        set((state) => {
-          state.image = image
-        }),
-      setPendingImage: (image) =>
-        set((state) => {
-          if (state.image === null) {
+        setImage: (image) =>
+          set((state) => {
             state.image = image
-          } else {
-            state.pendingImage = image
-          }
-        }),
-      confirmPendingImage: () =>
-        set((state) => {
-          if (state.pendingImage !== null) {
-            state.image = state.pendingImage
+          }),
+        setPendingImage: (image) =>
+          set((state) => {
+            if (state.image === null) {
+              state.image = image
+            } else {
+              state.pendingImage = image
+            }
+          }),
+        confirmPendingImage: () =>
+          set((state) => {
+            if (state.pendingImage !== null) {
+              state.image = state.pendingImage
+              state.pendingImage = null
+            }
+          }),
+        clearPendingImage: () =>
+          set((state) => {
             state.pendingImage = null
-          }
+          }),
+        setBackground: (background) =>
+          set((state) => {
+            Object.assign(state.background, background)
+          }),
+        setPadding: (value) =>
+          set((state) => {
+            state.padding = value
+          }),
+        setBorderRadius: (value) =>
+          set((state) => {
+            state.borderRadius = value
+          }),
+        setScale: (value) =>
+          set((state) => {
+            state.scale = value
+          }),
+        setOffset: (offsetX, offsetY) =>
+          set((state) => {
+            state.offsetX = offsetX
+            state.offsetY = offsetY
+          }),
+        setShadow: (shadow) =>
+          set((state) => {
+            Object.assign(state.shadow, shadow)
+          }),
+        setAspectRatio: (value) =>
+          set((state) => {
+            state.aspectRatio = value
+          }),
+        setExportFormat: (value) =>
+          set((state) => {
+            state.exportFormat = value
+          }),
+        setExportResolution: (value) =>
+          set((state) => {
+            const clamped = Math.min(
+              EXPORT_RESOLUTION_MAX,
+              Math.max(EXPORT_RESOLUTION_MIN, Math.round(Number(value)))
+            )
+            if (clamped === 1) {
+              state.exportResolution = 1
+            } else if (clamped === 2) {
+              state.exportResolution = 2
+            } else {
+              state.exportResolution = 3
+            }
+          }),
+        reset: () => set(() => ({ ...initialState })),
+      })),
+      {
+        partialize: (state: EditorState & EditorActions) => ({
+          ...state,
+          pendingImage: null,
         }),
-      clearPendingImage: () =>
-        set((state) => {
-          state.pendingImage = null
-        }),
-      setBackground: (background) =>
-        set((state) => {
-          Object.assign(state.background, background)
-        }),
-      setPadding: (value) =>
-        set((state) => {
-          state.padding = value
-        }),
-      setBorderRadius: (value) =>
-        set((state) => {
-          state.borderRadius = value
-        }),
-      setScale: (value) =>
-        set((state) => {
-          state.scale = value
-        }),
-      setOffset: (offsetX, offsetY) =>
-        set((state) => {
-          state.offsetX = offsetX
-          state.offsetY = offsetY
-        }),
-      setShadow: (shadow) =>
-        set((state) => {
-          Object.assign(state.shadow, shadow)
-        }),
-      setAspectRatio: (value) =>
-        set((state) => {
-          state.aspectRatio = value
-        }),
-      setExportFormat: (value) =>
-        set((state) => {
-          state.exportFormat = value
-        }),
-      setExportResolution: (value) =>
-        set((state) => {
-          const clamped = Math.min(
-            EXPORT_RESOLUTION_MAX,
-            Math.max(EXPORT_RESOLUTION_MIN, Math.round(Number(value)))
-          )
-          if (clamped === 1) {
-            state.exportResolution = 1
-          } else if (clamped === 2) {
-            state.exportResolution = 2
-          } else {
-            state.exportResolution = 3
-          }
-        }),
-      reset: () => set(() => ({ ...initialState })),
-    })),
+      }
+    ),
     { store: 'editor-store' }
   )
 )
