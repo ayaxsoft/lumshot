@@ -2,7 +2,7 @@
   "name": "Lumshot",
   "private": true,
   "license": "MIT",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "description": "Turn any image into something beautiful.",
   "author": "Ayaxsoft",
   "type": "module",
