@@ -13,6 +13,7 @@ import {
   ALLOWED_EXPORT_FORMATS,
   WINDOW_DEFAULT_WIDTH_PX,
   WINDOW_DEFAULT_HEIGHT_PX,
+  WINDOW_DRAG_REGION_HEIGHT_PX,
   WINDOW_TRAFFIC_LIGHT_X_PX,
   WINDOW_TRAFFIC_LIGHT_Y_PX,
 } from '../src/constants'
@@ -51,7 +52,16 @@ const createWindow = () => {
     height: WINDOW_DEFAULT_HEIGHT_PX,
     show: false,
     titleBarStyle: 'hidden',
-    trafficLightPosition: { x: WINDOW_TRAFFIC_LIGHT_X_PX, y: WINDOW_TRAFFIC_LIGHT_Y_PX },
+    ...(process.platform === 'darwin' && {
+      trafficLightPosition: { x: WINDOW_TRAFFIC_LIGHT_X_PX, y: WINDOW_TRAFFIC_LIGHT_Y_PX },
+    }),
+    ...(process.platform === 'win32' && {
+      titleBarOverlay: {
+        color: '#0a0a0a',
+        symbolColor: '#ffffff',
+        height: WINDOW_DRAG_REGION_HEIGHT_PX,
+      },
+    }),
     webPreferences: {
       preload: path.join(__dirname, 'preload.mjs'),
       contextIsolation: true,

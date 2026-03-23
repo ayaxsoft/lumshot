@@ -12,6 +12,8 @@ export const COLOR_SWATCH_POPOVER_CONTENT_WIDTH_PX = 220
 export const EXPORT_RESOLUTION_MIN = 1
 export const EXPORT_RESOLUTION_MAX = 3
 
+export const EDITOR_TEMPORAL_HANDLE_SET_DEBOUNCE_MS = 300
+
 export const CANVAS_EXPORT_SURFACE_TEST_ID = 'canvas-export-surface'
 
 export const DROPZONE_ICON_SIZE_PX = 54

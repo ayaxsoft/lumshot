@@ -1,9 +1,14 @@
 import { create } from 'zustand'
+import type { StoreApi } from 'zustand'
 import { temporal } from 'zundo'
 import { devtools } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
-import { EXPORT_RESOLUTION_MAX, EXPORT_RESOLUTION_MIN } from '@/constants'
+import {
+  EDITOR_TEMPORAL_HANDLE_SET_DEBOUNCE_MS,
+  EXPORT_RESOLUTION_MAX,
+  EXPORT_RESOLUTION_MIN,
+} from '@/constants'
 
 import {
   AspectRatio,
@@ -58,6 +63,19 @@ interface EditorActions {
   setExportFormat: (value: ExportFormat) => void
   setExportResolution: (value: number) => void
   reset: () => void
+}
+
+interface EditorStoreModel extends EditorState, EditorActions {}
+
+type EditorStoreSetState = StoreApi<EditorStoreModel>['setState']
+
+interface EditorTemporalHandleSet {
+  (
+    pastState: Parameters<EditorStoreSetState>[0],
+    replace: Parameters<EditorStoreSetState>[1],
+    currentState: Partial<EditorStoreModel>,
+    deltaState?: Partial<EditorStoreModel> | null
+  ): void
 }
 
 const initialState: EditorState = {
@@ -158,6 +176,18 @@ export const useEditorStore = create<EditorState & EditorActions>()(
           ...state,
           pendingImage: null,
         }),
+        handleSet: (recordPastInHistory) => {
+          const applyTemporalUndo: EditorTemporalHandleSet =
+            recordPastInHistory as EditorTemporalHandleSet
+          let timer: ReturnType<typeof setTimeout> | null = null
+          return (pastState, replace, currentState, deltaState) => {
+            if (timer) clearTimeout(timer)
+            timer = setTimeout(() => {
+              applyTemporalUndo(pastState, replace, currentState, deltaState)
+              timer = null
+            }, EDITOR_TEMPORAL_HANDLE_SET_DEBOUNCE_MS)
+          }
+        },
       }
     ),
     { store: 'editor-store' }
