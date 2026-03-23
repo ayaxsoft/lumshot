@@ -1,5 +1,11 @@
 # Lumshot
 
+## 1.4.0
+
+### Minor Changes
+
+- 2519b51: Add toolbar with undo/redo, start over, and send feedback dialog
+
 ## 1.3.0
 
 ### Minor Changes
