@@ -9,8 +9,7 @@ contextBridge.exposeInMainWorld('lumshotAPI', {
   sendFeedback: (payload: {
     rating: number | null
     message: string
-  }): Promise<{ success: boolean; error?: string }> =>
-    ipcRenderer.invoke('send-feedback', payload),
+  }): Promise<{ success: boolean; error?: string }> => ipcRenderer.invoke('send-feedback', payload),
 })
 
 export interface LumshotAPI {
