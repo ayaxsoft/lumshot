@@ -18,9 +18,13 @@ export default defineConfig({
       main: {
         entry: 'electron/main.ts',
         vite: {
+          define: {
+            'process.env.RESEND_API_KEY': JSON.stringify(process.env.RESEND_API_KEY ?? ''),
+            'process.env.FEEDBACK_TO_EMAIL': JSON.stringify(process.env.FEEDBACK_TO_EMAIL ?? ''),
+          },
           build: {
             rollupOptions: {
-              external: ['sharp'], // To avoid bundling sharp with the main process
+              external: ['sharp'],
             },
           },
         },

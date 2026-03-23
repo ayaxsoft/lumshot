@@ -5,6 +5,7 @@ import fs from 'node:fs/promises'
 import { createRequire } from 'node:module'
 import { config } from 'dotenv'
 import { Resend } from 'resend'
+import { autoUpdater } from 'electron-updater'
 
 config()
 import type { ExportPayload } from '../src/store/types'
@@ -181,4 +182,9 @@ app.on('activate', () => {
   }
 })
 
-app.whenReady().then(createWindow)
+app.whenReady().then(() => {
+  createWindow()
+  if (app.isPackaged) {
+    autoUpdater.checkForUpdatesAndNotify()
+  }
+})

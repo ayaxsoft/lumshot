@@ -1,0 +1,33 @@
+appId: com.ayaxsoft.lumshot
+productName: Lumshot
+copyright: Copyright © 2025 Ayaxsoft
+
+directories:
+  buildResources: build
+  output: release
+
+files:
+  - dist
+  - dist-electron
+
+publish:
+  provider: github
+  owner: ayaxsoft
+  repo: Lumshot
+
+mac:
+  target:
+    - target: dmg
+      arch: [x64, arm64]
+  category: public.app-category.graphics-design
+
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+
+linux:
+  target:
+    - target: AppImage
+      arch: [x64]
+  category: Graphics
