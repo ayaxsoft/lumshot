@@ -3,6 +3,10 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import fs from 'node:fs/promises'
 import { createRequire } from 'node:module'
+import { config } from 'dotenv'
+import { Resend } from 'resend'
+
+config()
 import type { ExportPayload } from '../src/store/types'
 import {
   ALLOWED_EXPORT_FORMATS,
@@ -132,6 +136,37 @@ ipcMain.handle('export-image', async (_event, payload: ExportPayload) => {
     return { success: false, error: message }
   }
 })
+
+ipcMain.handle(
+  'send-feedback',
+  async (_event, payload: { rating: number | null; message: string }) => {
+    const apiKey = process.env.RESEND_API_KEY
+    const toEmail = process.env.FEEDBACK_TO_EMAIL
+
+    if (!apiKey || !toEmail) {
+      return { success: false, error: 'Feedback is not configured.' }
+    }
+
+    const EMOJIS = ['🤬', '😐', '😏', '😎', '😍']
+    const EMOJI_LABELS = ['Frustrated', 'Neutral', 'Okay', 'Good', 'Love it']
+    const emoji = payload.rating !== null ? EMOJIS[payload.rating] : ''
+    const ratingLabel = payload.rating !== null ? EMOJI_LABELS[payload.rating] : 'No rating'
+
+    try {
+      const resend = new Resend(apiKey)
+      await resend.emails.send({
+        from: 'Lumshot Feedback <onboarding@resend.dev>',
+        to: toEmail,
+        subject: `Lumshot Feedback — ${emoji} ${ratingLabel}`,
+        text: `Rating: ${emoji} ${ratingLabel}\n\n${payload.message || '(no message)'}`,
+      })
+      return { success: true }
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err)
+      return { success: false, error: message }
+    }
+  }
+)
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
