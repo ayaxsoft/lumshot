@@ -21,8 +21,8 @@ export const FeedbackDialog = ({ trigger }: FeedbackDialogProps) => {
     }
   }
 
-  const handleSubmit = () => {
-    // TODO: send via Resend/backend
+  const handleSubmit = async () => {
+    await window.lumshotAPI.sendFeedback({ rating, message })
     handleOpenChange(false)
   }
 
@@ -68,7 +68,7 @@ export const FeedbackDialog = ({ trigger }: FeedbackDialogProps) => {
           />
 
           <button
-            onClick={handleSubmit}
+            onClick={() => void handleSubmit()}
             className="w-full mt-3 h-10 rounded-xl bg-white text-neutral-900 text-sm font-medium hover:bg-white/90 transition-colors"
           >
             Send Feedback

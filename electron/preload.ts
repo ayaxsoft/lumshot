@@ -6,11 +6,20 @@ contextBridge.exposeInMainWorld('lumshotAPI', {
   openFile: (): Promise<ImageMeta | null> => ipcRenderer.invoke('open-file'),
   exportImage: (payload: ExportPayload): Promise<{ success: boolean; error?: string }> =>
     ipcRenderer.invoke('export-image', payload),
+  sendFeedback: (payload: {
+    rating: number | null
+    message: string
+  }): Promise<{ success: boolean; error?: string }> =>
+    ipcRenderer.invoke('send-feedback', payload),
 })
 
 export interface LumshotAPI {
   openFile: () => Promise<ImageMeta | null>
   exportImage: (payload: ExportPayload) => Promise<{ success: boolean; error?: string }>
+  sendFeedback: (payload: {
+    rating: number | null
+    message: string
+  }) => Promise<{ success: boolean; error?: string }>
 }
 
 declare global {
