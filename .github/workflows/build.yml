@@ -34,9 +34,13 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: sudo apt-get install -y libarchive-tools
 
-      - name: Build and publish
+      - name: Build
+        run: npx vite build
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          FEEDBACK_TO_EMAIL: ${{ secrets.FEEDBACK_TO_EMAIL }}
+
+      - name: Publish
         run: npx electron-builder --${{ matrix.platform }} --publish always
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-          FEEDBACK_TO_EMAIL: ${{ secrets.FEEDBACK_TO_EMAIL }}
