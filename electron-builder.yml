@@ -20,14 +20,17 @@ mac:
     - target: dmg
       arch: [x64, arm64]
   category: public.app-category.graphics-design
+  icon: build/icons/512x512.png
 
 win:
   target:
     - target: nsis
       arch: [x64]
+  icon: build/icons/512x512.png
 
 linux:
   target:
     - target: AppImage
       arch: [x64]
   category: Graphics
+  icon: build/icons/512x512.png
