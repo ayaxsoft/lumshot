@@ -12,6 +12,10 @@ files:
   - node_modules/sharp/**/*
   - node_modules/@img/**/*
 
+asarUnpack:
+  - node_modules/sharp/**/*
+  - node_modules/@img/**/*
+
 publish:
   provider: github
   owner: ayaxsoft
