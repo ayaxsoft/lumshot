@@ -88,7 +88,7 @@ const initialState: EditorState = {
   offsetX: 0,
   offsetY: 0,
   shadow: defaultShadow,
-  aspectRatio: 'auto',
+  aspectRatio: '16:9',
   exportFormat: 'png',
   exportResolution: 2,
 }
