@@ -38,11 +38,11 @@ describe('ImageLayer', () => {
     expect(img.className).toContain('object-contain')
   })
 
-  it('should use object-cover for fixed aspect ratios so the frame has no letterboxing gaps', () => {
+  it('should always use object-contain to preserve the image natural ratio', () => {
     render(<ImageLayer image={testImage()} config={baseConfig({ aspectRatio: '1:1' })} />)
     const img = screen.getByRole('img', { name: 'test.png' })
-    expect(img.className).toContain('object-cover')
-    expect(img.className).not.toContain('object-contain')
+    expect(img.className).toContain('object-contain')
+    expect(img.className).not.toContain('object-cover')
   })
 
   it('should apply symmetric inset from padding on all sides', () => {
@@ -89,18 +89,15 @@ describe('ImageLayer', () => {
       aspectRatio: '100 / 100',
       maxHeight: '100%',
       maxWidth: '100%',
-      width: '100%',
     })
   })
 
-  it('should use height-first frame layout for portrait aspect ratio', () => {
+  it('should use image natural dimensions regardless of canvas aspect ratio', () => {
     render(<ImageLayer image={testImage()} config={baseConfig({ aspectRatio: '9:16' })} />)
     expect(screen.getByTestId('image-frame')).toHaveStyle({
-      aspectRatio: '9 / 16',
-      height: '100%',
+      aspectRatio: '100 / 100',
       maxHeight: '100%',
       maxWidth: '100%',
-      width: 'auto',
     })
   })
 

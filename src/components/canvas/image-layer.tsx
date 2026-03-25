@@ -1,5 +1,4 @@
 import { ImageConfig, ImageMeta } from '../../store/types'
-import { buildCanvasFrameBoxStyle } from '../../utils/build-canvas-frame-box-style'
 import { buildImageFrameStyle } from '../../utils/build-image-frame-style'
 import { CanvasFrameSlot } from './canvas-frame-slot'
 
@@ -10,11 +9,11 @@ interface ImageLayerProps {
 
 export const ImageLayer = ({ image, config }: ImageLayerProps) => {
   const frameStyle = {
-    ...buildCanvasFrameBoxStyle(config.aspectRatio, image),
+    aspectRatio: `${image.naturalWidth} / ${image.naturalHeight}`,
+    maxWidth: '100%',
+    maxHeight: '100%',
     ...buildImageFrameStyle(config.borderRadius, config.offsetX, config.offsetY, config.shadow),
   }
-
-  const imageObjectFitClass = config.aspectRatio === 'auto' ? 'object-contain' : 'object-cover'
 
   return (
     <div data-testid="image-layer" className="absolute inset-0">
@@ -27,7 +26,7 @@ export const ImageLayer = ({ image, config }: ImageLayerProps) => {
         <img
           src={image.dataUrl}
           alt={image.path}
-          className={`block h-full w-full ${imageObjectFitClass} object-center`}
+          className="block h-full w-full object-contain object-center"
         />
       </CanvasFrameSlot>
     </div>
