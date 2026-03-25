@@ -19,5 +19,6 @@ export const captureCompositePreviewAsDataUrl = async ({
   return toPng(node, {
     pixelRatio: exportResolution,
     cacheBust: true,
+    skipFonts: true,
   })
 }

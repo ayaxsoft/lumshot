@@ -21,14 +21,16 @@ export const ExportPanel = () => {
   const setExportResolution = useEditorStore((state) => state.setExportResolution)
 
   const [exportError, setExportError] = useState<string | null>(null)
+  const [isExporting, setIsExporting] = useState(false)
 
   const handleExport = useCallback(async () => {
+    if (isExporting || image === null) return
     setExportError(null)
-    if (image === null) {
-      return
-    }
+    setIsExporting(true)
+
     if (window.lumshotAPI === undefined) {
       setExportError('Export is only available in the desktop app.')
+      setIsExporting(false)
       return
     }
 
@@ -40,6 +42,7 @@ export const ExportPanel = () => {
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err)
       setExportError(message)
+      setIsExporting(false)
       return
     }
 
@@ -52,7 +55,8 @@ export const ExportPanel = () => {
     if (result.error) {
       setExportError(result.error)
     }
-  }, [exportFormat, exportResolution, image])
+    setIsExporting(false)
+  }, [isExporting, exportFormat, exportResolution, image])
 
   const canExport = image !== null
 
@@ -77,9 +81,9 @@ export const ExportPanel = () => {
 
       <button
         type="button"
-        disabled={!canExport}
+        disabled={!canExport || isExporting}
         onClick={() => void handleExport()}
-        className="mt-2 flex w-full items-center justify-center gap-2.5 rounded-xl bg-white px-4 py-3.5 text-sm font-semibold tracking-tight text-neutral-950 shadow-lg shadow-black/35 transition-[transform,box-shadow,background-color] duration-200 ease-out hover:bg-zinc-100 hover:shadow-xl hover:shadow-black/40 active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 disabled:pointer-events-none disabled:opacity-40 disabled:shadow-none"
+        className="mt-2 flex w-full cursor-pointer items-center justify-center gap-2.5 rounded-xl bg-white px-4 py-3.5 text-sm font-semibold tracking-tight text-neutral-950 shadow-lg shadow-black/35 transition-[transform,box-shadow,background-color] duration-200 ease-out hover:bg-zinc-100 hover:shadow-xl hover:shadow-black/40 active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 disabled:pointer-events-none disabled:opacity-40 disabled:shadow-none"
       >
         <IconDownload stroke={2} className="size-4.5 shrink-0 opacity-90" aria-hidden />
         Export
