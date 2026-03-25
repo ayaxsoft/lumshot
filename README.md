@@ -22,8 +22,8 @@
 You need **Node.js 22+** and **npm 10+**.
 
 ```bash
-git clone git@github.com:ayaxsoft/Lumshot.git
-cd Lumshot
+git clone git@github.com:ayaxsoft/lumshot.git
+cd lumshot
 npm install
 npm run dev
 ```
@@ -96,4 +96,4 @@ npx changeset add --empty
 
 ## License
 
-[Lumshot](https://github.com/ayaxsoft/Lumshot) is released under the [MIT License](LICENSE). Copyright © 2025 Ayaxsoft.
+[Lumshot](https://github.com/ayaxsoft/lumshot) is released under the [MIT License](LICENSE). Copyright © 2025 Ayaxsoft.
