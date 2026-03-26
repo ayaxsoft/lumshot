@@ -41,6 +41,7 @@ export const ImagePanel = () => {
   return (
     <div data-testid="image-panel" className="flex flex-col gap-2">
       <Slider
+        testId="padding-slider"
         icon={<IconBoxPadding stroke={1.5} />}
         label="Padding"
         value={padding}
@@ -54,6 +55,7 @@ export const ImagePanel = () => {
         label="Border Radius"
         value={borderRadius}
         onChange={setBorderRadius}
+        testId="border-radius-slider"
         min={0}
         max={100}
         step={1}
@@ -63,6 +65,7 @@ export const ImagePanel = () => {
         label="Scale"
         value={scale}
         onChange={setScale}
+        testId="scale-slider"
         min={0.5}
         max={1}
         step={0.01}
@@ -73,6 +76,7 @@ export const ImagePanel = () => {
         label="Offset X"
         value={offsetX}
         onChange={handleOffsetXChange}
+        testId="offset-x-slider"
         min={-100}
         max={100}
         step={1}
@@ -82,6 +86,7 @@ export const ImagePanel = () => {
         label="Offset Y"
         value={offsetY}
         onChange={handleOffsetYChange}
+        testId="offset-y-slider"
         min={-100}
         max={100}
         step={1}
