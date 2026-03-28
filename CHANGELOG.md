@@ -1,5 +1,11 @@
 # Lumshot
 
+## 2.0.0
+
+### Major Changes
+
+- 5441619: Add support to generate beautiful images of code snippets.
+
 ## 1.4.0
 
 ### Minor Changes
