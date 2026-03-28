@@ -13,6 +13,8 @@ import {
 import {
   AspectRatio,
   BackgroundConfig,
+  CodeConfig,
+  EditorMode,
   EditorState,
   ExportFormat,
   ImageMeta,
@@ -49,6 +51,7 @@ const defaultShadow: ShadowConfig = {
 }
 
 interface EditorActions {
+  setMode: (mode: EditorMode) => void
   setImage: (image: ImageMeta) => void
   setPendingImage: (image: ImageMeta) => void
   confirmPendingImage: () => void
@@ -62,6 +65,7 @@ interface EditorActions {
   setAspectRatio: (value: AspectRatio) => void
   setExportFormat: (value: ExportFormat) => void
   setExportResolution: (value: number) => void
+  setCode: (code: Partial<CodeConfig>) => void
   reset: () => void
 }
 
@@ -78,7 +82,19 @@ interface EditorTemporalHandleSet {
   ): void
 }
 
+const defaultCode: CodeConfig = {
+  content: '',
+  filename: '',
+  language: 'typescript',
+  theme: 'nightOwl',
+  fontSize: 16,
+  fontFamily: 'ui-monospace',
+  showLineNumbers: true,
+  windowStyle: 'macos',
+}
+
 const initialState: EditorState = {
+  mode: 'image',
   image: null,
   pendingImage: null,
   background: defaultBackground,
@@ -91,6 +107,7 @@ const initialState: EditorState = {
   aspectRatio: '16:9',
   exportFormat: 'png',
   exportResolution: 2,
+  code: defaultCode,
 }
 
 export const useEditorStore = create<EditorState & EditorActions>()(
@@ -99,6 +116,10 @@ export const useEditorStore = create<EditorState & EditorActions>()(
       immer((set) => ({
         ...initialState,
 
+        setMode: (mode) =>
+          set((state) => {
+            state.mode = mode
+          }),
         setImage: (image) =>
           set((state) => {
             state.image = image
@@ -168,6 +189,10 @@ export const useEditorStore = create<EditorState & EditorActions>()(
             } else {
               state.exportResolution = 3
             }
+          }),
+        setCode: (code) =>
+          set((state) => {
+            Object.assign(state.code, code)
           }),
         reset: () => set(() => ({ ...initialState })),
       })),

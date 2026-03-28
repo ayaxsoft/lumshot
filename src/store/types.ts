@@ -1,5 +1,38 @@
 export type BackgroundType = 'gradient' | 'solid' | 'radial' | 'mesh' | 'pattern' | 'image'
 
+export type EditorMode = 'image' | 'code'
+
+export type WindowStyle = 'macos' | 'windows' | 'none'
+
+export type CodeTheme =
+  | 'atomOneDark'
+  | 'dracula'
+  | 'nord'
+  | 'nightOwl'
+  | 'vs2015'
+  | 'monokai'
+  | 'shadesOfPurple'
+  | 'tomorrowNight'
+  | 'tomorrowNightBlue'
+  | 'hybrid'
+  | 'obsidian'
+  | 'solarizedDark'
+  | 'githubGist'
+  | 'atomOneLight'
+  | 'solarizedLight'
+  | 'github'
+
+export interface CodeConfig {
+  content: string
+  filename: string
+  language: string
+  theme: CodeTheme
+  fontSize: number
+  fontFamily: string
+  showLineNumbers: boolean
+  windowStyle: WindowStyle
+}
+
 export type PatternType =
   | 'dots'
   | 'lines'
@@ -111,6 +144,7 @@ export interface TextConfig {
 }
 
 export interface EditorState {
+  mode: EditorMode
   image: ImageMeta | null
   pendingImage: ImageMeta | null // image that is being pasted
   background: BackgroundConfig
@@ -123,4 +157,5 @@ export interface EditorState {
   aspectRatio: AspectRatio
   exportFormat: ExportFormat
   exportResolution: 1 | 2 | 3
+  code: CodeConfig
 }

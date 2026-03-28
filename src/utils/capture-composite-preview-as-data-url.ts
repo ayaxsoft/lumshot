@@ -20,5 +20,11 @@ export const captureCompositePreviewAsDataUrl = async ({
     pixelRatio: exportResolution,
     cacheBust: true,
     skipFonts: true,
+    filter: (domNode) => {
+      if (domNode instanceof HTMLElement && domNode.dataset.exportIgnore === 'true') {
+        return false
+      }
+      return true
+    },
   })
 }

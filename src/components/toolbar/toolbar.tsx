@@ -5,8 +5,8 @@ import { Tooltip } from '@/components/ui/tooltip'
 import {
   IconArrowBackUp,
   IconArrowForwardUp,
-  IconRefresh,
   IconMessageCircle,
+  IconRefresh,
 } from '@tabler/icons-react'
 
 export const Toolbar = () => {
@@ -14,7 +14,7 @@ export const Toolbar = () => {
   const { undo, redo, canRedo, canUndo } = useEditorHistory()
 
   return (
-    <div className="h-10 shrink-0 flex items-center justify-center px-3 gap-1 bg-neutral-900 border-b border-white/5">
+    <div className="h-10 shrink-0 flex items-center px-3 gap-1 bg-neutral-900 border-b border-white/5">
       <Tooltip content="Undo" side="bottom">
         <button
           onClick={() => void undo()}
@@ -49,7 +49,7 @@ export const Toolbar = () => {
         </button>
       </Tooltip>
 
-      <div className="w-px h-4 bg-white/10 mx-1" />
+      <div className="flex-1" />
 
       <FeedbackDialog
         trigger={
