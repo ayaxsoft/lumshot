@@ -1,11 +1,17 @@
 import { ipcRenderer, contextBridge } from 'electron'
 import type { ExportPayload, ImageMeta } from '../src/store/types'
 
-// Expose protected methods that allow the Renderer process to use
 contextBridge.exposeInMainWorld('lumshotAPI', {
   openFile: (): Promise<ImageMeta | null> => ipcRenderer.invoke('open-file'),
-  exportImage: (payload: ExportPayload): Promise<{ success: boolean; error?: string }> =>
+
+  exportImage: (
+    payload: ExportPayload
+  ): Promise<{ success: boolean; filePath?: string; error?: string }> =>
     ipcRenderer.invoke('export-image', payload),
+
+  openExportedFile: (filePath: string): Promise<void> =>
+    ipcRenderer.invoke('open-exported-file', filePath),
+
   sendFeedback: (payload: {
     rating: number | null
     message: string
@@ -14,7 +20,10 @@ contextBridge.exposeInMainWorld('lumshotAPI', {
 
 export interface LumshotAPI {
   openFile: () => Promise<ImageMeta | null>
-  exportImage: (payload: ExportPayload) => Promise<{ success: boolean; error?: string }>
+  exportImage: (
+    payload: ExportPayload
+  ) => Promise<{ success: boolean; filePath?: string; error?: string }>
+  openExportedFile: (filePath: string) => Promise<void>
   sendFeedback: (payload: {
     rating: number | null
     message: string

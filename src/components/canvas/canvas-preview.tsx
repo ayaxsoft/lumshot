@@ -7,12 +7,16 @@ import { resolveCanvasAspectRatioNumber } from '../../utils/resolve-canvas-aspec
 import { DropZone } from '../dropzone/dropzone'
 import { BackgroundLayer } from './background-layer'
 import { CanvasFrameSlot } from './canvas-frame-slot'
+import { CodeLayer } from './code-layer'
 import { ImageLayer } from './image-layer'
 
 const CANVAS_FIT_FACTOR = 0.9
 
 const CanvasPreview = () => {
+  const mode = useEditorStore((state) => state.mode)
   const image = useEditorStore((state) => state.image)
+  const code = useEditorStore((state) => state.code)
+  const setCode = useEditorStore((state) => state.setCode)
   const background = useEditorStore((state) => state.background)
   const shadow = useEditorStore((state) => state.shadow)
   const padding = useEditorStore((state) => state.padding)
@@ -81,7 +85,16 @@ const CanvasPreview = () => {
         style={surfaceStyle}
       >
         <BackgroundLayer background={background} />
-        {image ? (
+        {mode === 'code' ? (
+          <CodeLayer
+            code={code}
+            padding={padding}
+            scale={scale}
+            borderRadius={borderRadius}
+            shadow={shadow}
+            onCodeChange={(content) => setCode({ content })}
+          />
+        ) : image ? (
           <ImageLayer image={image} config={imageConfig} />
         ) : (
           <CanvasFrameSlot

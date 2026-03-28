@@ -331,3 +331,91 @@ export const ALLOWED_EXPORT_FORMATS = ['png', 'jpeg', 'webp'] as const
 
 export const GRADIENT_PRESETS_COLLAPSED_COUNT = 4
 export const GRADIENT_PRESETS_PEEK_COUNT = 2
+
+export const CODE_THEMES = [
+  // ── Dark ──────────────────────────────────────────────────────────────────
+  { label: 'Night Owl', value: 'nightOwl', dark: true },
+  { label: 'Atom One Dark', value: 'atomOneDark', dark: true },
+  { label: 'Dracula', value: 'dracula', dark: true },
+  { label: 'Nord', value: 'nord', dark: true },
+  { label: 'VS Dark', value: 'vs2015', dark: true },
+  { label: 'Monokai', value: 'monokai', dark: true },
+  { label: 'Shades of Purple', value: 'shadesOfPurple', dark: true },
+  { label: 'Tomorrow Night', value: 'tomorrowNight', dark: true },
+  { label: 'Tomorrow Night Blue', value: 'tomorrowNightBlue', dark: true },
+  { label: 'Hybrid', value: 'hybrid', dark: true },
+  { label: 'Obsidian', value: 'obsidian', dark: true },
+  { label: 'Solarized Dark', value: 'solarizedDark', dark: true },
+  // ── Light ─────────────────────────────────────────────────────────────────
+  { label: 'GitHub', value: 'github', dark: false },
+  { label: 'GitHub Gist', value: 'githubGist', dark: false },
+  { label: 'Atom One Light', value: 'atomOneLight', dark: false },
+  { label: 'Solarized Light', value: 'solarizedLight', dark: false },
+]
+
+export const CODE_THEME_BG: Record<string, string> = {
+  atomOneDark: '#282c34',
+  dracula: '#282a36',
+  nord: '#2E3440',
+  nightOwl: '#011627',
+  vs2015: '#1E1E1E',
+  monokai: '#272822',
+  shadesOfPurple: '#2d2b57',
+  tomorrowNight: '#1d1f21',
+  tomorrowNightBlue: '#002451',
+  hybrid: '#1d1f21',
+  obsidian: '#282b2e',
+  solarizedDark: '#002b36',
+  githubGist: '#ffffff',
+  atomOneLight: '#fafafa',
+  solarizedLight: '#fdf6e3',
+  github: '#f8f8f8',
+}
+
+export const CODE_FONTS = [
+  { label: 'System Mono', value: 'ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace' },
+  { label: 'Menlo', value: 'Menlo, Monaco, monospace' },
+  { label: 'Monaco', value: 'Monaco, Menlo, monospace' },
+  { label: 'SF Mono', value: '"SF Mono", ui-monospace, Menlo, monospace' },
+  { label: 'Consolas', value: 'Consolas, "Courier New", monospace' },
+  { label: 'Courier New', value: '"Courier New", Courier, monospace' },
+  { label: 'Fira Code', value: '"Fira Code", "Fira Mono", monospace' },
+  { label: 'JetBrains Mono', value: '"JetBrains Mono", monospace' },
+  { label: 'Source Code Pro', value: '"Source Code Pro", monospace' },
+  { label: 'IBM Plex Mono', value: '"IBM Plex Mono", monospace' },
+  { label: 'Cascadia Code', value: '"Cascadia Code", monospace' },
+  { label: 'Inconsolata', value: 'Inconsolata, monospace' },
+]
+
+export const CODE_WINDOW_STYLES = [
+  { label: 'macOS', value: 'macos' },
+  { label: 'Windows', value: 'windows' },
+  { label: 'None', value: 'none' },
+]
+
+export const CODE_LANGUAGES = [
+  { label: 'TypeScript', value: 'typescript' },
+  { label: 'JavaScript', value: 'javascript' },
+  { label: 'JSX', value: 'jsx' },
+  { label: 'TSX', value: 'tsx' },
+  { label: 'Python', value: 'python' },
+  { label: 'Rust', value: 'rust' },
+  { label: 'Go', value: 'go' },
+  { label: 'Java', value: 'java' },
+  { label: 'C', value: 'c' },
+  { label: 'C++', value: 'cpp' },
+  { label: 'C#', value: 'csharp' },
+  { label: 'Swift', value: 'swift' },
+  { label: 'Kotlin', value: 'kotlin' },
+  { label: 'Ruby', value: 'ruby' },
+  { label: 'PHP', value: 'php' },
+  { label: 'CSS', value: 'css' },
+  { label: 'HTML', value: 'html' },
+  { label: 'JSON', value: 'json' },
+  { label: 'YAML', value: 'yaml' },
+  { label: 'Bash', value: 'bash' },
+  { label: 'SQL', value: 'sql' },
+  { label: 'GraphQL', value: 'graphql' },
+  { label: 'Markdown', value: 'markdown' },
+  { label: 'Plain Text', value: 'text' },
+]

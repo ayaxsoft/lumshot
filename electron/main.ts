@@ -1,4 +1,4 @@
-import { app, BrowserWindow, dialog, ipcMain } from 'electron'
+import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import fs from 'node:fs/promises'
@@ -141,11 +141,15 @@ ipcMain.handle('export-image', async (_event, payload: ExportPayload) => {
       await sharp(inputBuffer).toFormat(format).toFile(filePath)
     }
 
-    return { success: true }
+    return { success: true, filePath }
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err)
     return { success: false, error: message }
   }
+})
+
+ipcMain.handle('open-exported-file', async (_event, filePath: string) => {
+  await shell.openPath(filePath)
 })
 
 ipcMain.handle(
