@@ -88,7 +88,7 @@ const defaultCode: CodeConfig = {
   language: 'typescript',
   theme: 'nightOwl',
   fontSize: 16,
-  fontFamily: 'ui-monospace',
+  fontFamily: 'ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace',
   showLineNumbers: true,
   windowStyle: 'macos',
 }
