@@ -72,13 +72,19 @@ export const ExportPanel = () => {
     <div data-testid="export-panel" className="flex flex-col gap-2">
       <div className="flex items-center gap-2">
         {/* Format pills */}
-        <div className="flex flex-1 rounded-lg bg-white/5 p-0.5 gap-0.5">
+        <div
+          role="radiogroup"
+          aria-label="Export format"
+          className="flex flex-1 rounded-lg bg-white/5 p-0.5 gap-0.5"
+        >
           {EXPORT_FORMATS.map((fmt) => (
             <button
               key={fmt.value}
               type="button"
+              role="radio"
+              aria-checked={exportFormat === fmt.value}
               onClick={() => setExportFormat(fmt.value)}
-              className={`flex flex-1 items-center justify-center h-6 rounded-md text-xs transition-colors ${
+              className={`flex flex-1 items-center justify-center h-6 rounded-md text-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/55 ${
                 exportFormat === fmt.value
                   ? 'bg-white/15 text-white'
                   : 'text-white/40 hover:text-white/70'
@@ -90,13 +96,19 @@ export const ExportPanel = () => {
         </div>
 
         {/* Resolution pills */}
-        <div className="flex rounded-lg bg-white/5 p-0.5 gap-0.5">
+        <div
+          role="radiogroup"
+          aria-label="Export resolution"
+          className="flex rounded-lg bg-white/5 p-0.5 gap-0.5"
+        >
           {EXPORT_RESOLUTIONS.map((res) => (
             <button
               key={res.value}
               type="button"
+              role="radio"
+              aria-checked={exportResolution === res.value}
               onClick={() => setExportResolution(res.value)}
-              className={`flex w-8 items-center justify-center h-6 rounded-md text-xs transition-colors ${
+              className={`flex w-8 items-center justify-center h-6 rounded-md text-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/55 ${
                 exportResolution === res.value
                   ? 'bg-white/15 text-white'
                   : 'text-white/40 hover:text-white/70'

@@ -38,6 +38,7 @@ export const Slider = ({
 
       <div className="min-w-16 min-h-0 flex-1 py-0.5">
         <SliderRoot
+          aria-label={label}
           className="relative flex h-6 w-full cursor-pointer touch-none select-none items-center"
           value={[value]}
           onValueChange={(nextValues) => {
@@ -53,7 +54,7 @@ export const Slider = ({
           <SliderTrack className="relative h-full w-full overflow-hidden rounded-md">
             <SliderRange className="hidden" />
           </SliderTrack>
-          <SliderThumb className="block h-5 w-5 rounded-full bg-white shadow focus:outline-none" />
+          <SliderThumb className="block h-5 w-5 rounded-full bg-white shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-1 focus-visible:ring-offset-neutral-800" />
         </SliderRoot>
       </div>
 

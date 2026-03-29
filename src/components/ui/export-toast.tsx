@@ -9,6 +9,8 @@ interface ExportToastProps {
 const AUTO_DISMISS_MS = 5000
 
 export const ExportToast = ({ filePath, onDismiss }: ExportToastProps) => {
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
   useEffect(() => {
     const timer = setTimeout(onDismiss, AUTO_DISMISS_MS)
     return () => clearTimeout(timer)
@@ -26,7 +28,11 @@ export const ExportToast = ({ filePath, onDismiss }: ExportToastProps) => {
       role="status"
       aria-live="polite"
       className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 rounded-xl bg-neutral-800 border border-white/10 px-4 py-3 shadow-2xl shadow-black/50 animate-in"
-      style={{ animation: 'toast-in 0.22s cubic-bezier(0.34,1.56,0.64,1) both' }}
+      style={
+        reducedMotion
+          ? undefined
+          : { animation: 'toast-in 0.22s cubic-bezier(0.34,1.56,0.64,1) both' }
+      }
     >
       {/* Check icon */}
       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-emerald-500/20 shrink-0">
@@ -39,9 +45,9 @@ export const ExportToast = ({ filePath, onDismiss }: ExportToastProps) => {
       {/* Open button */}
       <button
         onClick={handleOpen}
-        className="flex items-center gap-1.5 ml-1 rounded-lg bg-white/10 hover:bg-white/18 px-3 py-1.5 text-xs font-medium text-white transition-colors"
+        className="flex items-center gap-1.5 ml-1 rounded-lg bg-white/10 hover:bg-white/18 px-3 py-1.5 text-xs font-medium text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/55"
       >
-        <IconExternalLink size={12} stroke={2} />
+        <IconExternalLink size={12} stroke={2} aria-hidden />
         Open
       </button>
 

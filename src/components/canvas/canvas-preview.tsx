@@ -47,8 +47,7 @@ const CanvasPreview = () => {
 
   const surfaceStyle = useMemo(() => {
     const { width: cw, height: ch } = containerSize
-    if (cw === 0 || ch === 0)
-      return { width: 0, height: 0, transition: 'width 0.3s ease, height 0.3s ease' }
+    if (cw === 0 || ch === 0) return { width: 0, height: 0 }
 
     const ratio = resolveCanvasAspectRatioNumber(
       aspectRatio,
@@ -62,7 +61,7 @@ const CanvasPreview = () => {
       h = maxH
       w = h * ratio
     }
-    return { width: `${w}px`, height: `${h}px`, transition: 'width 0.3s ease, height 0.3s ease' }
+    return { width: `${w}px`, height: `${h}px` }
   }, [containerSize, aspectRatio, image])
 
   const emptyFrameStyle = useMemo(
@@ -81,7 +80,7 @@ const CanvasPreview = () => {
     >
       <div
         data-testid={CANVAS_EXPORT_SURFACE_TEST_ID}
-        className="relative overflow-hidden rounded-3xl shadow-2xl"
+        className="relative overflow-hidden rounded-3xl shadow-2xl transition-[width,height] duration-300 ease-in-out motion-reduce:transition-none"
         style={surfaceStyle}
       >
         <BackgroundLayer background={background} />
