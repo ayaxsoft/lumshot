@@ -20,6 +20,7 @@ npm run format:check # Prettier (check only)
 ```
 
 **Before every commit:**
+
 ```bash
 npm run test && npm run lint && npm run typecheck && npm run format
 ```
