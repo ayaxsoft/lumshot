@@ -16,7 +16,14 @@ import solarizedLight from 'react-syntax-highlighter/dist/esm/styles/hljs/solari
 import tomorrowNight from 'react-syntax-highlighter/dist/esm/styles/hljs/tomorrow-night'
 import tomorrowNightBlue from 'react-syntax-highlighter/dist/esm/styles/hljs/tomorrow-night-blue'
 import vs2015 from 'react-syntax-highlighter/dist/esm/styles/hljs/vs2015'
-import { CODE_THEME_BG } from '@/constants'
+import {
+  CODE_LAYER_GUTTER_EM,
+  CODE_LAYER_H_PADDING_PX,
+  CODE_LAYER_LINE_HEIGHT,
+  CODE_LAYER_V_PADDING_PX,
+  CODE_THEME_BG,
+  CODE_THEMES,
+} from '@/constants'
 import { buildShadowCSS } from '@/utils/build-shadow-css'
 import type { CodeConfig, ShadowConfig } from '@/store/types'
 
@@ -39,13 +46,6 @@ const THEME_MAP: Record<string, Record<string, React.CSSProperties>> = {
   vs2015,
 }
 
-// Vertical space taken by the gutter (em units, relative to code font-size).
-// react-syntax-highlighter renders line numbers at ~3.5em wide.
-const GUTTER_EM = 3.5
-const CODE_V_PX = 28
-const CODE_H_PX = 28
-const LINE_HEIGHT = 1.75
-
 interface CodeLayerProps {
   code: CodeConfig
   padding: number
@@ -67,32 +67,23 @@ export const CodeLayer = ({
 
   const themeStyle = THEME_MAP[code.theme] ?? nightOwl
   const bg = CODE_THEME_BG[code.theme] ?? '#011627'
-  const isLight =
-    !(
-      (THEME_MAP[code.theme] as Record<string, React.CSSProperties>)?.hljs?.color
-        ?.toString()
-        .startsWith('#0') ?? false
-    ) &&
-    (bg === '#ffffff' || bg === '#fafafa' || bg === '#fdf6e3' || bg === '#f8f8f8')
+  const isLight = !(CODE_THEMES.find((t) => t.value === code.theme)?.dark ?? true)
 
-  // Title bar: semi-transparent dark/light overlay on top of the solid `bg`
   const titleOverlay = isLight ? 'rgba(0,0,0,0.055)' : 'rgba(0,0,0,0.28)'
   const titleBorder = isLight ? 'rgba(0,0,0,0.09)' : 'rgba(255,255,255,0.07)'
   const filenameColor = isLight ? 'rgba(0,0,0,0.36)' : 'rgba(255,255,255,0.36)'
   const caretColor = isLight ? 'rgba(0,0,0,0.72)' : 'rgba(255,255,255,0.72)'
 
-  // Corner radius: store value (0-100) → tasteful px (0-22px)
   const cornerRadius = Math.round(4 + Math.min(borderRadius * 0.18, 18))
 
   const boxShadow =
     buildShadowCSS(shadow) || '0 24px 64px rgba(0,0,0,0.38), 0 6px 20px rgba(0,0,0,0.24)'
 
-  // Outer padding drives the gap between window and canvas edge
   const outerPad = `${Math.max(padding * 0.5, 3)}%`
 
   // Textarea left-padding must visually align with the code text column
-  const gutterPx = code.showLineNumbers ? code.fontSize * GUTTER_EM : 0
-  const textareaLeft = CODE_H_PX + gutterPx
+  const gutterPx = code.showLineNumbers ? code.fontSize * CODE_LAYER_GUTTER_EM : 0
+  const textareaLeft = CODE_LAYER_H_PADDING_PX + gutterPx
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -120,7 +111,6 @@ export const CodeLayer = ({
         padding: outerPad,
       }}
     >
-      {/* ── Code window: fills the padded area, scales visually ── */}
       <div
         style={{
           flex: 1,
@@ -136,7 +126,6 @@ export const CodeLayer = ({
           background: bg,
         }}
       >
-        {/* ── macOS title bar ── */}
         {code.windowStyle === 'macos' && (
           <div
             style={{
@@ -201,7 +190,6 @@ export const CodeLayer = ({
           </div>
         )}
 
-        {/* ── Windows title bar ── */}
         {code.windowStyle === 'windows' && (
           <div
             style={{
@@ -224,7 +212,7 @@ export const CodeLayer = ({
             >
               {code.filename}
             </span>
-            {(['─', '□', '✕'] as const).map((icon) => (
+            {['─', '□', '✕'].map((icon) => (
               <span
                 key={icon}
                 style={{
@@ -244,7 +232,6 @@ export const CodeLayer = ({
           </div>
         )}
 
-        {/* ── Code area: flex-1 so it fills remaining window height ── */}
         <div
           style={{
             flex: 1,
@@ -259,14 +246,14 @@ export const CodeLayer = ({
             style={themeStyle}
             showLineNumbers={code.showLineNumbers}
             lineNumberStyle={{
-              minWidth: `${GUTTER_EM}em`,
+              minWidth: `${CODE_LAYER_GUTTER_EM}em`,
               paddingRight: '1em',
               paddingLeft: 0,
               opacity: 0.3,
               userSelect: 'none',
               fontFamily: code.fontFamily,
               fontSize: `${code.fontSize}px`,
-              lineHeight: LINE_HEIGHT,
+              lineHeight: CODE_LAYER_LINE_HEIGHT,
               textAlign: 'right',
             }}
             customStyle={{
@@ -275,11 +262,11 @@ export const CodeLayer = ({
               left: 0,
               right: 0,
               margin: 0,
-              padding: `${CODE_V_PX}px ${CODE_H_PX}px`,
+              padding: `${CODE_LAYER_V_PADDING_PX}px ${CODE_LAYER_H_PADDING_PX}px`,
               background: 'transparent',
               fontSize: `${code.fontSize}px`,
               fontFamily: code.fontFamily,
-              lineHeight: LINE_HEIGHT,
+              lineHeight: CODE_LAYER_LINE_HEIGHT,
               whiteSpace: 'pre',
               tabSize: 2,
               pointerEvents: 'none',
@@ -289,14 +276,13 @@ export const CodeLayer = ({
               style: {
                 fontFamily: code.fontFamily,
                 fontSize: `${code.fontSize}px`,
-                lineHeight: LINE_HEIGHT,
+                lineHeight: CODE_LAYER_LINE_HEIGHT,
               },
             }}
           >
             {code.content || ' '}
           </SyntaxHighlighter>
 
-          {/* Transparent input overlay */}
           <textarea
             ref={textareaRef}
             data-export-ignore="true"
@@ -318,11 +304,11 @@ export const CodeLayer = ({
               caretColor,
               fontFamily: code.fontFamily,
               fontSize: `${code.fontSize}px`,
-              lineHeight: LINE_HEIGHT,
-              paddingTop: CODE_V_PX,
-              paddingBottom: CODE_V_PX,
+              lineHeight: CODE_LAYER_LINE_HEIGHT,
+              paddingTop: CODE_LAYER_V_PADDING_PX,
+              paddingBottom: CODE_LAYER_V_PADDING_PX,
               paddingLeft: textareaLeft,
-              paddingRight: CODE_H_PX,
+              paddingRight: CODE_LAYER_H_PADDING_PX,
               whiteSpace: 'pre',
               overflow: 'hidden',
               tabSize: 2,

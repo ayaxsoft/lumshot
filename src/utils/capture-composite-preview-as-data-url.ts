@@ -6,6 +6,9 @@ interface CaptureCompositePreviewAsDataUrlParams {
   exportResolution: number
 }
 
+const filterExportIgnored = (domNode: Node) =>
+  !(domNode instanceof HTMLElement && domNode.dataset.exportIgnore === 'true')
+
 export const captureCompositePreviewAsDataUrl = async ({
   exportResolution,
 }: CaptureCompositePreviewAsDataUrlParams): Promise<string> => {
@@ -20,11 +23,6 @@ export const captureCompositePreviewAsDataUrl = async ({
     pixelRatio: exportResolution,
     cacheBust: true,
     skipFonts: true,
-    filter: (domNode) => {
-      if (domNode instanceof HTMLElement && domNode.dataset.exportIgnore === 'true') {
-        return false
-      }
-      return true
-    },
+    filter: filterExportIgnored,
   })
 }

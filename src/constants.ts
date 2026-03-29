@@ -419,3 +419,9 @@ export const CODE_LANGUAGES = [
   { label: 'Markdown', value: 'markdown' },
   { label: 'Plain Text', value: 'text' },
 ]
+
+// react-syntax-highlighter renders line numbers at ~3.5em wide
+export const CODE_LAYER_GUTTER_EM = 3.5
+export const CODE_LAYER_V_PADDING_PX = 28
+export const CODE_LAYER_H_PADDING_PX = 28
+export const CODE_LAYER_LINE_HEIGHT = 1.75
