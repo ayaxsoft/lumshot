@@ -95,7 +95,7 @@ export const GradientPresets = ({ config, onChange }: GradientPresetsProps) => {
 
       <div
         className={cn(
-          'grid transition-[grid-template-rows] duration-300 ease-out',
+          'grid transition-[grid-template-rows] duration-300 ease-out motion-reduce:transition-none',
           isExpanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
         )}
       >

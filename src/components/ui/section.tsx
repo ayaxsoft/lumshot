@@ -34,7 +34,7 @@ export const Section = ({ title, children, defaultOpen = true }: SectionProps) =
         role="region"
         aria-label={title}
         className={cn(
-          'grid transition-[grid-template-rows] duration-200 ease-out',
+          'grid transition-[grid-template-rows] duration-200 ease-out motion-reduce:transition-none',
           isOpen ? 'grid-rows-[minmax(0,1fr)]' : 'grid-rows-[0fr]'
         )}
       >

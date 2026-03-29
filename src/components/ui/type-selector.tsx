@@ -20,7 +20,7 @@ export const TypeSelector = ({
   options,
   value,
   onChange,
-  ariaLabel = 'Tipo de fondo',
+  ariaLabel = 'Background type',
   previewContain = false,
 }: TypeSelectorProps) => {
   const columnCount = options.length

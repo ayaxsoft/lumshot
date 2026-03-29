@@ -4,6 +4,7 @@ import {
   IconLetterCase,
   IconResize,
 } from '@tabler/icons-react'
+import { useId } from 'react'
 import { CODE_FONTS, CODE_LANGUAGES, CODE_THEMES, CODE_WINDOW_STYLES } from '@/constants'
 import { useEditorStore } from '@/store/useEditorStore'
 import type { CodeTheme, WindowStyle } from '@/store/types'
@@ -12,7 +13,7 @@ import { ShadowControls } from '../ui/shadow-controls'
 import { Switch } from '../ui/switch'
 
 const selectClass =
-  'w-full rounded-lg bg-white/5 px-3 py-2 text-sm text-white/80 outline-none focus:ring-1 focus:ring-white/20 cursor-pointer appearance-none'
+  'w-full rounded-lg bg-white/5 px-3 py-2 text-sm text-white/80 outline-none focus-visible:ring-1 focus-visible:ring-white/20 cursor-pointer appearance-none'
 
 export const CodePanel = () => {
   const code = useEditorStore((state) => state.code)
@@ -26,24 +27,37 @@ export const CodePanel = () => {
   const shadow = useEditorStore((state) => state.shadow)
   const setShadow = useEditorStore((state) => state.setShadow)
 
+  const filenameId = useId()
+  const languageId = useId()
+  const themeId = useId()
+  const fontId = useId()
+  const windowStyleLabelId = useId()
+  const lineNumbersId = useId()
+
   return (
     <div data-testid="code-panel" className="flex flex-col gap-3">
       {/* Filename */}
       <div className="flex flex-col gap-1.5">
-        <label className="text-xs text-white/40 uppercase tracking-wide">Filename</label>
+        <label htmlFor={filenameId} className="text-xs text-white/40 uppercase tracking-wide">
+          Filename
+        </label>
         <input
+          id={filenameId}
           type="text"
           value={code.filename}
           onChange={(e) => setCode({ filename: e.target.value })}
-          placeholder="Counter.tsx"
-          className="w-full rounded-lg bg-white/5 px-3 py-2 text-sm text-white/80 placeholder-white/20 outline-none focus:ring-1 focus:ring-white/20"
+          placeholder="Counter.tsx…"
+          className="w-full rounded-lg bg-white/5 px-3 py-2 text-sm text-white/80 placeholder-white/20 outline-none focus-visible:ring-1 focus-visible:ring-white/20"
         />
       </div>
 
       {/* Language */}
       <div className="flex flex-col gap-1.5">
-        <label className="text-xs text-white/40 uppercase tracking-wide">Language</label>
+        <label htmlFor={languageId} className="text-xs text-white/40 uppercase tracking-wide">
+          Language
+        </label>
         <select
+          id={languageId}
           value={code.language}
           onChange={(e) => setCode({ language: e.target.value })}
           className={selectClass}
@@ -58,8 +72,11 @@ export const CodePanel = () => {
 
       {/* Theme */}
       <div className="flex flex-col gap-1.5">
-        <label className="text-xs text-white/40 uppercase tracking-wide">Theme</label>
+        <label htmlFor={themeId} className="text-xs text-white/40 uppercase tracking-wide">
+          Theme
+        </label>
         <select
+          id={themeId}
           value={code.theme}
           onChange={(e) => setCode({ theme: e.target.value as CodeTheme })}
           className={selectClass}
@@ -83,30 +100,43 @@ export const CodePanel = () => {
 
       {/* Window style */}
       <div className="flex flex-col gap-1.5">
-        <label className="text-xs text-white/40 uppercase tracking-wide">Window</label>
-        <div className="grid grid-cols-3 gap-1.5">
+        <p id={windowStyleLabelId} className="text-xs text-white/40 uppercase tracking-wide">
+          Window
+        </p>
+        <div
+          role="radiogroup"
+          aria-labelledby={windowStyleLabelId}
+          className="grid grid-cols-3 gap-1.5"
+        >
           {CODE_WINDOW_STYLES.map((style) => (
             <button
               key={style.value}
+              type="button"
+              role="radio"
+              aria-checked={code.windowStyle === style.value}
               onClick={() => setCode({ windowStyle: style.value as WindowStyle })}
-              className={`flex flex-col items-center gap-1 rounded-lg px-2 py-2.5 text-xs transition-colors ${
+              className={`flex flex-col items-center gap-1 rounded-lg px-2 py-2.5 text-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/55 ${
                 code.windowStyle === style.value
                   ? 'bg-white/15 text-white'
                   : 'bg-white/5 text-white/50 hover:bg-white/10 hover:text-white/80'
               }`}
             >
               {style.value === 'macos' && (
-                <span className="flex items-center gap-1 mb-0.5">
+                <span className="flex items-center gap-1 mb-0.5" aria-hidden>
                   <span className="w-2.5 h-2.5 rounded-full bg-[#FF5F57]" />
                   <span className="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]" />
                   <span className="w-2.5 h-2.5 rounded-full bg-[#28C840]" />
                 </span>
               )}
               {style.value === 'windows' && (
-                <span className="text-[9px] text-white/35 tracking-tighter mb-0.5">─ □ ✕</span>
+                <span className="text-[9px] text-white/35 tracking-tighter mb-0.5" aria-hidden>
+                  ─ □ ✕
+                </span>
               )}
               {style.value === 'none' && (
-                <span className="text-[11px] text-white/20 mb-0.5">—</span>
+                <span className="text-[11px] text-white/20 mb-0.5" aria-hidden>
+                  —
+                </span>
               )}
               <span>{style.label}</span>
             </button>
@@ -116,8 +146,11 @@ export const CodePanel = () => {
 
       {/* Font */}
       <div className="flex flex-col gap-1.5">
-        <label className="text-xs text-white/40 uppercase tracking-wide">Font</label>
+        <label htmlFor={fontId} className="text-xs text-white/40 uppercase tracking-wide">
+          Font
+        </label>
         <select
+          id={fontId}
           value={code.fontFamily}
           onChange={(e) => setCode({ fontFamily: e.target.value })}
           className={selectClass}
@@ -144,9 +177,11 @@ export const CodePanel = () => {
 
       {/* Line numbers */}
       <div className="flex items-center justify-between rounded-lg bg-white/5 px-3 py-2">
-        <span className="text-sm text-white/60">Line Numbers</span>
+        <label htmlFor={lineNumbersId} className="text-sm text-white/60 cursor-pointer">
+          Line Numbers
+        </label>
         <Switch
-          id="line-numbers"
+          id={lineNumbersId}
           checked={code.showLineNumbers}
           onCheckedChange={(checked) => setCode({ showLineNumbers: checked })}
         />

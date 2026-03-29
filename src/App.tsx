@@ -11,13 +11,19 @@ const App = () => {
   return (
     <TooltipProvider>
       <div className="flex flex-col w-screen h-screen bg-neutral-900">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-3 focus:py-1.5 focus:text-xs focus:bg-neutral-900 focus:text-white focus:rounded-lg focus:ring-1 focus:ring-white/30"
+        >
+          Skip to main content
+        </a>
         <div className="drag-region relative flex items-center justify-center h-10 shrink-0 bg-neutral-950 border-b border-white/5">
-          <span className="text-[11px] font-medium text-white select-none">Lumshot</span>
+          <h1 className="text-[11px] font-medium text-white select-none">Lumshot</h1>
         </div>
         <ReplaceImageDialog />
         <div className="flex flex-1 min-h-0">
           <Sidebar />
-          <main className="flex-1 flex flex-col min-h-0">
+          <main id="main-content" className="flex-1 flex flex-col min-h-0">
             <Toolbar />
             <div className="flex-1 relative">
               <CanvasPreview />

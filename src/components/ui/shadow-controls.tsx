@@ -19,7 +19,9 @@ export const ShadowControls = ({ shadow, onChange }: ShadowControlsProps) => {
   return (
     <div data-testid="shadow-controls" className="flex flex-col gap-2">
       <div className="flex items-center justify-between gap-2">
-        <span className="text-sm text-white/60">Shadow</span>
+        <label htmlFor="shadow-enabled" className="text-sm text-white/60 cursor-pointer">
+          Shadow
+        </label>
         <Switch
           id="shadow-enabled"
           checked={shadow.enabled}

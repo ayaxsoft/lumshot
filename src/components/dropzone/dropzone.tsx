@@ -15,7 +15,7 @@ export const DropZone = () => {
   }
 
   const handleDrop = useCallback(
-    (event: React.DragEvent<HTMLDivElement>) => {
+    (event: React.DragEvent<HTMLButtonElement>) => {
       event.preventDefault()
 
       const files = event.dataTransfer.files
@@ -42,17 +42,19 @@ export const DropZone = () => {
     [setPendingImage]
   )
 
-  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+  const handleDragOver = (event: React.DragEvent<HTMLButtonElement>) => {
     event.preventDefault()
   }
 
   return (
-    <div
+    <button
+      type="button"
       data-testid="dropzone"
-      onClick={handleOpen}
+      onClick={() => void handleOpen()}
       onDrop={handleDrop}
       onDragOver={handleDragOver}
-      className="group flex flex-col items-center justify-center w-full h-full gap-5 cursor-pointer select-none px-4"
+      aria-label="Add an image — drop a file, click to browse, or paste from the clipboard"
+      className="group flex flex-col items-center justify-center w-full h-full gap-5 cursor-pointer select-none px-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/30"
     >
       <IconPhotoPlus
         size={DROPZONE_ICON_SIZE_PX}
@@ -68,6 +70,6 @@ export const DropZone = () => {
           Drop a file here, click to browse, or paste from the clipboard
         </p>
       </div>
-    </div>
+    </button>
   )
 }
