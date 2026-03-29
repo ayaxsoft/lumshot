@@ -1,5 +1,12 @@
 # Lumshot
 
+## 2.0.1
+
+### Patch Changes
+
+- 7c5cf61: Code quality improvements
+- f346745: Apply web interface guidelines and improvements
+
 ## 2.0.0
 
 ### Major Changes
