@@ -12,6 +12,25 @@
   width: 100% !important;
 }
 
+.code-layer-textarea::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.code-layer-textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+.code-layer-textarea::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+.code-layer-textarea:hover::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+}
+.code-layer-textarea::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
 @theme {
   --animate-gradient-preset-select: gradient-preset-select 320ms cubic-bezier(0.34, 1.45, 0.64, 1)
     both;
