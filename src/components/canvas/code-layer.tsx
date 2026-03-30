@@ -64,6 +64,7 @@ export const CodeLayer = ({
   onCodeChange,
 }: CodeLayerProps) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const highlightScrollRef = useRef<HTMLDivElement>(null)
 
   const themeStyle = THEME_MAP[code.theme] ?? nightOwl
   const bg = CODE_THEME_BG[code.theme] ?? '#011627'
@@ -99,6 +100,16 @@ export const CodeLayer = ({
     },
     [code.content, onCodeChange]
   )
+
+  const handleScroll = useCallback((e: React.UIEvent<HTMLTextAreaElement>) => {
+    if (!highlightScrollRef.current) {
+      return
+    }
+    const { scrollTop, scrollLeft } = e.currentTarget
+
+    highlightScrollRef.current.scrollTop = scrollTop
+    highlightScrollRef.current.scrollLeft = scrollLeft
+  }, [])
 
   return (
     <div
@@ -240,48 +251,58 @@ export const CodeLayer = ({
             overflow: 'hidden',
           }}
         >
-          {/* Syntax-highlighted display — visual only, no pointer events */}
-          <SyntaxHighlighter
-            language={code.language === 'text' ? 'plaintext' : code.language}
-            style={themeStyle}
-            showLineNumbers={code.showLineNumbers}
-            lineNumberStyle={{
-              minWidth: `${CODE_LAYER_GUTTER_EM}em`,
-              paddingRight: '1em',
-              paddingLeft: 0,
-              opacity: 0.3,
-              userSelect: 'none',
-              fontFamily: code.fontFamily,
-              fontSize: `${code.fontSize}px`,
-              lineHeight: CODE_LAYER_LINE_HEIGHT,
-              textAlign: 'right',
-            }}
-            customStyle={{
+          <div
+            ref={highlightScrollRef}
+            style={{
               position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              margin: 0,
-              padding: `${CODE_LAYER_V_PADDING_PX}px ${CODE_LAYER_H_PADDING_PX}px`,
-              background: 'transparent',
-              fontSize: `${code.fontSize}px`,
-              fontFamily: code.fontFamily,
-              lineHeight: CODE_LAYER_LINE_HEIGHT,
-              whiteSpace: 'pre',
-              tabSize: 2,
+              inset: 0,
+              overflow: 'hidden',
               pointerEvents: 'none',
-              minHeight: '100%',
             }}
-            codeTagProps={{
-              style: {
+          >
+            {/* Syntax-highlighted display — visual only, no pointer events */}
+            <SyntaxHighlighter
+              language={code.language === 'text' ? 'plaintext' : code.language}
+              style={themeStyle}
+              showLineNumbers={code.showLineNumbers}
+              lineNumberStyle={{
+                minWidth: `${CODE_LAYER_GUTTER_EM}em`,
+                paddingRight: '1em',
+                paddingLeft: 0,
+                opacity: 0.3,
+                userSelect: 'none',
                 fontFamily: code.fontFamily,
                 fontSize: `${code.fontSize}px`,
                 lineHeight: CODE_LAYER_LINE_HEIGHT,
-              },
-            }}
-          >
-            {code.content || ' '}
-          </SyntaxHighlighter>
+                textAlign: 'right',
+              }}
+              customStyle={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                // right: 0,
+                margin: 0,
+                padding: `${CODE_LAYER_V_PADDING_PX}px ${CODE_LAYER_H_PADDING_PX}px`,
+                background: 'transparent',
+                fontSize: `${code.fontSize}px`,
+                fontFamily: code.fontFamily,
+                lineHeight: CODE_LAYER_LINE_HEIGHT,
+                whiteSpace: 'pre',
+                tabSize: 2,
+                pointerEvents: 'none',
+                minHeight: '100%',
+              }}
+              codeTagProps={{
+                style: {
+                  fontFamily: code.fontFamily,
+                  fontSize: `${code.fontSize}px`,
+                  lineHeight: CODE_LAYER_LINE_HEIGHT,
+                },
+              }}
+            >
+              {code.content || ' '}
+            </SyntaxHighlighter>
+          </div>
 
           <textarea
             ref={textareaRef}
@@ -289,30 +310,35 @@ export const CodeLayer = ({
             value={code.content}
             onChange={(e) => onCodeChange(e.target.value)}
             onKeyDown={handleKeyDown}
+            onScroll={handleScroll}
             spellCheck={false}
             autoCorrect="off"
             autoCapitalize="off"
             placeholder="// Start typing..."
-            style={{
-              position: 'absolute',
-              inset: 0,
-              resize: 'none',
-              border: 'none',
-              outline: 'none',
-              background: 'transparent',
-              color: 'transparent',
-              caretColor,
-              fontFamily: code.fontFamily,
-              fontSize: `${code.fontSize}px`,
-              lineHeight: CODE_LAYER_LINE_HEIGHT,
-              paddingTop: CODE_LAYER_V_PADDING_PX,
-              paddingBottom: CODE_LAYER_V_PADDING_PX,
-              paddingLeft: textareaLeft,
-              paddingRight: CODE_LAYER_H_PADDING_PX,
-              whiteSpace: 'pre',
-              overflow: 'hidden',
-              tabSize: 2,
-            }}
+            className="code-layer-textarea"
+            style={
+              {
+                '--scrollbar-thumb': isLight ? 'rgba(0,0,0,0.2)' : 'rgba(255,255,255,0.2)',
+                position: 'absolute',
+                inset: 0,
+                resize: 'none',
+                border: 'none',
+                outline: 'none',
+                background: 'transparent',
+                color: 'transparent',
+                caretColor,
+                fontFamily: code.fontFamily,
+                fontSize: `${code.fontSize}px`,
+                lineHeight: CODE_LAYER_LINE_HEIGHT,
+                paddingTop: CODE_LAYER_V_PADDING_PX,
+                paddingBottom: CODE_LAYER_V_PADDING_PX,
+                paddingLeft: textareaLeft,
+                paddingRight: CODE_LAYER_H_PADDING_PX,
+                whiteSpace: 'pre',
+                overflow: 'auto',
+                tabSize: 2,
+              } as React.CSSProperties
+            }
           />
         </div>
       </div>
